@@ -5,10 +5,14 @@ class Message(
     private var targetUID: String = "",
     private var msg: String = "",
     private var dateTime: String = "",
-    private var isReported: Boolean = false
+    private var isReported: Boolean = false,
+    private var messageID: String = ""
 ) {
 
 
+    fun setMessageID(messageID: String): Unit{
+        this.messageID = messageID
+    }
 
     fun setUserID(userID: String): Unit{
         this.userID = userID
@@ -50,5 +54,8 @@ class Message(
         return this.isReported
     }
 
+    fun getMessageID(): String{
+        return this.messageID
+    }
 
 }

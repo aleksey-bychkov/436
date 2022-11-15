@@ -2,10 +2,12 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.UserDictionary
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,10 +47,17 @@ class MainActivity : AppCompatActivity() {
         var targetUID = "targetUID"
         val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
         binding.fabSend.setOnClickListener(View.OnClickListener {
-            db.child("Messages").push()
-                .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false))
-                .addOnCompleteListener(
-                    OnCompleteListener { binding.message.editText?.setText("") })
+            if (filterMessage(binding.message.editText?.text.toString())){
+                Toast.makeText(this, "Your message contains a word that violates our terms of service", Toast.LENGTH_SHORT).show()
+            } else {
+                var newEntry = db.child("Messages").push()
+                var key = newEntry.key
+                db.child("Messages").push()
+                    .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, key!!))
+                    .addOnCompleteListener(
+                        OnCompleteListener { binding.message.editText?.setText("") })
+            }
+
         })
 
         adapter = RecyclerViewAdapter(this, list)
@@ -89,7 +98,17 @@ class MainActivity : AppCompatActivity() {
 
         fun reportMessage(v: View): Unit {
             val par: ViewGroup = v.parent as ViewGroup
-            val child: TextView = par.getChildAt(1) as TextView
+            val child: TextView = par.getChildAt(0) as TextView
             Log.i("reportButton", child.text.toString())
+        }
+
+        fun filterMessage(msg: String): Boolean {
+            val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch").toSet()
+            for (wrd in bannedWords){
+                if(msg.contains(wrd, ignoreCase = true)){
+                    return true
+                }
+            }
+            return false
         }
     }

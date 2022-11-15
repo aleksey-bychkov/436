@@ -16,6 +16,7 @@ class RecyclerViewAdapter
         //var username: TextView = itemView.findViewById(R.id.username)
         var message: TextView = itemView.findViewById(R.id.user_message)
         var dateTime: TextView = itemView.findViewById(R.id.user_message_date_time)
+        var messageID:TextView = itemView.findViewById(R.id.messageID)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,6 +28,7 @@ class RecyclerViewAdapter
         //holder.username.text = list.get(position).getUserEmail()
         holder.message.text = list.get(position).getMsg()
         holder.dateTime.text = list.get(position).getDateTime()
+        holder.messageID.text = list.get(position).getMessageID()
         if(FirebaseAuth.getInstance().uid == list.get(position).getUserID()){
             holder.itemView.setBackgroundColor(parseColor("#CE93D8"))
 

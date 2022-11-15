@@ -18,13 +18,14 @@
         android:padding="10dp"
 
         >
-        <!--<TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sample@gmail.com"
+        <TextView
+                android:id="@+id/messageID"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:text="-NGtWHjTmhqas-YqlQkj"
+                android:textColor="@android:color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />-->
+                app:layout_constraintStart_toStartOf="@id/user_message" />-->
 
         <TextView
             android:id="@+id/user_message"

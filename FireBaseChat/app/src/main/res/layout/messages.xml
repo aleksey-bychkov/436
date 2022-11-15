@@ -6,39 +6,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="6dp"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/cardview_shadow_start_color">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-            <TextView
-                android:id="@+id/user_email"
+    app:cardBackgroundColor="@color/cardview_shadow_start_color"
+
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back"
+        android:padding="10dp">
+        <!--<TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="sample@gmail.com"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />-->
 
-            <TextView
-                android:id="@+id/user_message"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sample message"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/user_email"
-                app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/user_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sample message"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <!--app:layout_constraintTop_toBottomOf="@+id/username"-->
 
-            <TextView
-                android:id="@+id/user_message_date_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="11/14/22 00:00AM"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_message" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/user_message_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11/14/22 00:00AM"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_message" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -39,12 +39,12 @@ class MainActivity : AppCompatActivity() {
 
         var user = auth.currentUser
         var uID = user?.uid
-        var uEmail = user?.email
+
         var targetUID = "targetUID"
         val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
         binding.fabSend.setOnClickListener(View.OnClickListener {
             db.child("Messages").push()
-                .setValue(Message(uEmail!!, targetUID, binding.message.editText?.text.toString(), time))
+                .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time))
                 .addOnCompleteListener(
                     OnCompleteListener { binding.message.editText?.setText("") })
         })

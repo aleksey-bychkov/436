@@ -1,7 +1,7 @@
 package com.example.myapplication
 
 class Message(
-    private var userEmail: String = "",
+    private var userID: String = "",
     private var targetUID: String = "",
     private var msg: String = "",
     private var dateTime: String = ""
@@ -9,8 +9,8 @@ class Message(
 
 
 
-    fun setUserEmail(userEmail: String): Unit{
-        this.userEmail = userEmail
+    fun setUserID(userID: String): Unit{
+        this.userID = userID
     }
 
     fun setMsg(msg: String): Unit{
@@ -25,8 +25,8 @@ class Message(
         this.targetUID = targetUID
     }
 
-    fun getUserEmail(): String {
-        return this.userEmail
+    fun getUserID(): String {
+        return this.userID
     }
 
     fun getMsg(): String {

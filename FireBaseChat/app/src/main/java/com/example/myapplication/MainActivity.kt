@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         var user = auth.currentUser
         var uID = user?.uid
         var uEmail = user?.email
-        var targetUID = "targetUIDBroken"
+        var targetUID = "targetUID"
         val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
         binding.fabSend.setOnClickListener(View.OnClickListener {
             db.child("Messages").push()

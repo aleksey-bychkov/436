@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -39,12 +42,11 @@ class MainActivity : AppCompatActivity() {
 
         var user = auth.currentUser
         var uID = user?.uid
-
         var targetUID = "targetUID"
         val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
         binding.fabSend.setOnClickListener(View.OnClickListener {
             db.child("Messages").push()
-                .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time))
+                .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false))
                 .addOnCompleteListener(
                     OnCompleteListener { binding.message.editText?.setText("") })
         })
@@ -65,11 +67,16 @@ class MainActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot){
                     list.clear()
                     for (snap in snapshot.children){
+
                         val msg = snap.getValue(Message::class.java)
+
                         if (msg != null) {
-                            if(msg.getTargetUID() == target)
-                            list.add(msg)
-                            adapter.notifyDataSetChanged()
+
+                            if(!msg.getIsReported() && ((msg.getTargetUID() == target && msg.getUserID() == auth.uid) || (msg.getTargetUID() == auth.uid && msg.getUserID() == target))){
+                                list.add(msg)
+                                adapter.notifyDataSetChanged()
+                            }
+
                         }
                     }
                 }
@@ -78,5 +85,11 @@ class MainActivity : AppCompatActivity() {
 
                 }
             })
+        }
+
+        fun reportMessage(v: View): Unit {
+            val par: ViewGroup = v.parent as ViewGroup
+            val child: TextView = par.getChildAt(1) as TextView
+            Log.i("reportButton", child.text.toString())
         }
     }

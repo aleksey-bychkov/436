@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/drawable/back.xml" value="0.2585" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/drawable/ic_baseline_report_24.xml" value="0.2395" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.2395" />
         <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/activity_login_registration.xml" value="0.35989583333333336" />
         <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/activity_main.xml" value="0.315625" />
         <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/messages.xml" value="0.5" />

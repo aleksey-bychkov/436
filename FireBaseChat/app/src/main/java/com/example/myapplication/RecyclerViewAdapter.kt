@@ -29,6 +29,8 @@ class RecyclerViewAdapter
         holder.dateTime.text = list.get(position).getDateTime()
         if(FirebaseAuth.getInstance().uid == list.get(position).getUserID()){
             holder.itemView.setBackgroundColor(parseColor("#CE93D8"))
+
+
         } else {
             holder.itemView.setBackgroundColor(parseColor("#D3D3D3"))
         }

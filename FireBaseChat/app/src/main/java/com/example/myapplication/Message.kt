@@ -4,7 +4,8 @@ class Message(
     private var userID: String = "",
     private var targetUID: String = "",
     private var msg: String = "",
-    private var dateTime: String = ""
+    private var dateTime: String = "",
+    private var isReported: Boolean = false
 ) {
 
 
@@ -25,6 +26,10 @@ class Message(
         this.targetUID = targetUID
     }
 
+    fun setIsReported(status: Boolean): Unit{
+        this.isReported = status
+    }
+
     fun getUserID(): String {
         return this.userID
     }
@@ -40,4 +45,10 @@ class Message(
     fun getTargetUID(): String {
         return this.targetUID
     }
+
+    fun getIsReported(): Boolean {
+        return this.isReported
+    }
+
+
 }

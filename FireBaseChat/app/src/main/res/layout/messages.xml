@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
@@ -14,7 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back"
-        android:padding="10dp">
+        android:padding="10dp"
+
+        >
         <!--<TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -30,8 +33,8 @@
             android:text="Sample message"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--app:layout_constraintTop_toBottomOf="@+id/username"-->
 
 
@@ -41,8 +44,25 @@
             android:layout_height="wrap_content"
             android:text="11/14/22 00:00AM"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/reportButton"
             app:layout_constraintTop_toBottomOf="@id/user_message" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/reportButton"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="@drawable/ic_baseline_report_24"
+            android:foregroundGravity="center"
+            android:outlineAmbientShadowColor="@android:color/transparent"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="20dp"
+            android:onClick="reportMessage"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Polmegle</string>
+    <string name="email_hint">Enter Email</string>
+    <string name="password_hint">Enter Password</string>
+    <string name="login_text">Login</string>
+    <string name="register_text">Register</string>
+    <string name="enter_message_hint">Enter message ...</string>
 </resources>

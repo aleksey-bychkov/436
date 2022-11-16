@@ -1,25 +1,22 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.provider.UserDictionary
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.children
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,10 +47,9 @@ class MainActivity : AppCompatActivity() {
             if (filterMessage(binding.message.editText?.text.toString())){
                 Toast.makeText(this, "Your message contains a word that violates our terms of service", Toast.LENGTH_SHORT).show()
             } else {
-                var newEntry = db.child("Messages").push()
-                var key = newEntry.key
-                db.child("Messages").push()
-                    .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, key!!))
+                var newEntry = db.child("Messages").push().key
+                db.child("Messages").child(newEntry!!)
+                    .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, newEntry!!))
                     .addOnCompleteListener(
                         OnCompleteListener { binding.message.editText?.setText("") })
             }
@@ -99,7 +95,19 @@ class MainActivity : AppCompatActivity() {
         fun reportMessage(v: View): Unit {
             val par: ViewGroup = v.parent as ViewGroup
             val child: TextView = par.getChildAt(0) as TextView
-            Log.i("reportButton", child.text.toString())
+            val intent = Intent(this, ReportMessage::class.java)
+            db.child("Messages").child(child.text.toString()).get().addOnCompleteListener(){
+                intent.putExtra("message",it.result.child("msg").value.toString())
+                intent.putExtra("messageID",it.result.child("messageID").value.toString())
+                intent.putExtra("reportedUID",it.result.child("userID").value.toString())
+                intent.putExtra("reportingUID",it.result.child("targetUID").value.toString())
+                Log.i("testGet",it.result.child("userID").value.toString())
+                Log.i("testGet",it.result.child("targetUID").value.toString())
+                startActivity(intent)
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+            }
+
         }
 
         fun filterMessage(msg: String): Boolean {

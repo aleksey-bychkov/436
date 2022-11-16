@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
 class RecyclerViewAdapter
@@ -17,6 +18,7 @@ class RecyclerViewAdapter
         var message: TextView = itemView.findViewById(R.id.user_message)
         var dateTime: TextView = itemView.findViewById(R.id.user_message_date_time)
         var messageID:TextView = itemView.findViewById(R.id.messageID)
+        var reportButton: FloatingActionButton = itemView.findViewById(R.id.reportButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +33,7 @@ class RecyclerViewAdapter
         holder.messageID.text = list.get(position).getMessageID()
         if(FirebaseAuth.getInstance().uid == list.get(position).getUserID()){
             holder.itemView.setBackgroundColor(parseColor("#CE93D8"))
-
+            holder.reportButton.visibility = View.INVISIBLE
 
         } else {
             holder.itemView.setBackgroundColor(parseColor("#D3D3D3"))

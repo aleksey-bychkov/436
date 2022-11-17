@@ -37,6 +37,7 @@ class RecyclerViewAdapter
 
         } else {
             holder.itemView.setBackgroundColor(parseColor("#D3D3D3"))
+            holder.reportButton.visibility = View.VISIBLE
         }
 
 

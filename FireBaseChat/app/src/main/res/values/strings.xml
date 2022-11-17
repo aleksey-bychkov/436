@@ -5,4 +5,12 @@
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
     <string name="enter_message_hint">Enter message ...</string>
+    <string name="report_header">Report a Message</string>
+    <string name="report_message_display_header">The message being reported is:</string>
+    <string name="reason_header">Select a reason for the report:</string>
+    <string name="additional_info_header">Enter any additional info:</string>
+    <string name="additional_info_hint">Enter info...</string>
+    <string name="back">Back</string>
+    <string name="report">Report</string>
+
 </resources>

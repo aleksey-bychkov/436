@@ -21,6 +21,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     // Figure out a way to get target ID
+
     var target = "targetUID"
 
 
@@ -38,10 +39,14 @@ class MainActivity : AppCompatActivity() {
         db = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
 
+        val extras = intent.extras
+        if (extras != null) {
+            target = extras.getString("target")!!
+        }
 
         var user = auth.currentUser
         var uID = user?.uid
-        var targetUID = "targetUID"
+        var targetUID = target
         val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
         binding.fabSend.setOnClickListener(View.OnClickListener {
             if (filterMessage(binding.message.editText?.text.toString())){
@@ -51,7 +56,17 @@ class MainActivity : AppCompatActivity() {
                 db.child("Messages").child(newEntry!!)
                     .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, newEntry!!))
                     .addOnCompleteListener(
-                        OnCompleteListener { binding.message.editText?.setText("") })
+                        OnCompleteListener {
+                            var length = binding.message.editText?.text.toString().length
+                            if(length > 50){
+                                length = 50
+                            }
+                            db.child("Users").child(uID).child("Contacts").child(targetUID)
+                                .setValue(MessagePreview(targetUID, targetUID, binding.message.editText?.text.toString().substring(0,length-1), time, false))
+                            db.child("Users").child(targetUID).child("Contacts").child(uID)
+                                .setValue(MessagePreview(uID, uID, binding.message.editText?.text.toString().substring(0,length-1), time, false))
+                            binding.message.editText?.setText("") })
+
             }
 
         })

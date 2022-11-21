@@ -37,10 +37,9 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
         holder.targetID.text = list.get(position).getTargetUID()
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra("target",list.get(position).getTargetUID())
-        holder.viewMessage.setOnClickListener(View.OnClickListener {
-            startActivity(context, Intent(context, MainActivity::class.java), null)
-
-        })
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            startActivity(context, Intent(context, MainActivity::class.java), null)})
+        
     }
 
     override fun getItemCount(): Int {

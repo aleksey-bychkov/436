@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,7 @@ class MessagesPreview: AppCompatActivity() {
 
 
     fun receiveMessages(){
+        Log.i("debug",auth.currentUser?.uid!!)
         db.child("Users").child(auth.currentUser?.uid!!).child("Contacts").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
                 list.clear()

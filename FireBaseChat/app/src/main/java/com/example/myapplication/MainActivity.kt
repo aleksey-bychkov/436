@@ -22,7 +22,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     // Figure out a way to get target ID
 
-    var target = "targetUID"
+    var target = ""
 
 
     var list = ArrayList<Message>()
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             target = extras.getString("target")!!
+            Log.i("test",target)
         }
 
         var user = auth.currentUser
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                                 length = 50
                             }
                             db.child("Users").child(uID).child("Contacts").child(targetUID)
-                                .setValue(MessagePreview(targetUID, targetUID, binding.message.editText?.text.toString().substring(0,length-1), time, false))
+                                .setValue(MessagePreview(targetUID, targetUID, binding.message.editText?.text.toString().substring(0,length), time, false))
                             db.child("Users").child(targetUID).child("Contacts").child(uID)
                                 .setValue(MessagePreview(uID, uID, binding.message.editText?.text.toString().substring(0,length-1), time, false))
                             binding.message.editText?.setText("") })
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun filterMessage(msg: String): Boolean {
-            val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch").toSet()
+            val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch", "nigga", "prostitute", "jew", "blackie", "bastard").toSet()
             for (wrd in bannedWords){
                 if(msg.contains(wrd, ignoreCase = true)){
                     return true

@@ -17,7 +17,7 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //var username: TextView = itemView.findViewById(R.id.username)
         var username: TextView = itemView.findViewById(R.id.username)
-        var message: TextView = itemView.findViewById(R.id.messageID2)
+        var message: TextView = itemView.findViewById(R.id.user_message2)
         var dateTime: TextView = itemView.findViewById(R.id.user_message_date_time2)
         var messageID: TextView = itemView.findViewById(R.id.messageID2)
         var viewMessage: FloatingActionButton = itemView.findViewById(R.id.viewMessage)
@@ -35,11 +35,12 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
         holder.dateTime.text = list.get(position).getDateTime()
         holder.messageID.text = ""
         holder.targetID.text = list.get(position).getTargetUID()
-        val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra("target",list.get(position).getTargetUID())
+
         holder.itemView.setOnClickListener(View.OnClickListener {
-            startActivity(context, Intent(context, MainActivity::class.java), null)})
-        
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("target",list.get(position).getTargetUID())
+            startActivity(context, intent, null)})
+
     }
 
     override fun getItemCount(): Int {

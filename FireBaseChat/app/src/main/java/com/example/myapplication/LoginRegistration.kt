@@ -47,6 +47,9 @@ class LoginRegistration : AppCompatActivity() {
                 OnCompleteListener {
                 if (it.isSuccessful) {
                     Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+                    binding.enterUsername.visibility = View.VISIBLE
+                    binding.login.visibility = View.INVISIBLE
+
                 } else {
                     Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
                 }
@@ -58,9 +61,9 @@ class LoginRegistration : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
-       if (currentUser != null){
+        if (currentUser != null){
            startActivity(Intent(this, MessagesPreview::class.java))
            finish()
-       }
+        }
     }
 }

@@ -46,7 +46,7 @@ class RecyclerViewAdapter
             holder.messageR.text = list.get(position).getMsg()
             holder.dateTimeR.text = list.get(position).getDateTime()
             holder.messageIDR.text = list.get(position).getMessageID()
-            holder.cardR.setBackgroundColor(parseColor("#CE93D8"))
+            holder.cardR.setCardBackgroundColor(parseColor("#CE93D8"))
             holder.reportButtonR.visibility = View.GONE
             holder.left.visibility = View.GONE
 
@@ -55,7 +55,7 @@ class RecyclerViewAdapter
             holder.messageL.text = list.get(position).getMsg()
             holder.dateTimeL.text = list.get(position).getDateTime()
             holder.messageIDL.text = list.get(position).getMessageID()
-            holder.cardL.setBackgroundColor(parseColor("#D3D3D3"))
+            holder.cardL.setCardBackgroundColor(parseColor("#D3D3D3"))
             holder.reportButtonL.visibility = View.VISIBLE
             holder.right.visibility = View.GONE
 

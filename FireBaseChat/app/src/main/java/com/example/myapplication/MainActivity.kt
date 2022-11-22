@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (msg != null) {
 
-                            if(!msg.getIsReported() && ((msg.getTargetUID() == target && msg.getUserID() == auth.uid) || (msg.getTargetUID() == auth.uid && msg.getUserID() == target))){
+                            if((!msg.getIsReported() || msg.getIsReported() && msg.getUserID() == auth.uid) && ((msg.getTargetUID() == target && msg.getUserID() == auth.uid) || (msg.getTargetUID() == auth.uid && msg.getUserID() == target))){
                                 list.add(msg)
                                 adapter.notifyDataSetChanged()
                             }

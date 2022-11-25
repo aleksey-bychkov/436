@@ -28,7 +28,7 @@
         android:id="@+id/email_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter a valid email"
+        android:text="@string/email_label"
         android:fontFamily="sans-serif"
         android:textSize="15sp"
         android:gravity="center"
@@ -55,7 +55,7 @@
         android:id="@+id/password_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter a valid password, minimum of 6 characters"
+        android:text="@string/password_label"
         android:fontFamily="sans-serif"
         android:textSize="15sp"
         android:gravity="center"
@@ -80,7 +80,7 @@
         android:id="@+id/username_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter a valid username"
+        android:text="@string/username_label"
         android:fontFamily="sans-serif"
         android:textSize="15sp"
         android:gravity="center"
@@ -95,7 +95,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:visibility="gone"
-        android:hint="Enter Username">
+        android:hint="@string/username_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -123,7 +123,7 @@
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="@string/submit"
             android:visibility="gone"
             android:layout_weight="1"></Button>
 
@@ -131,7 +131,7 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="next"
+            android:text="@string/next"
             android:visibility="gone"
             android:layout_weight="1"></Button>
 
@@ -151,20 +151,20 @@
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="forgot username/password?"
+        android:text="@string/forgot"
         ></Button>
     <Button
         android:id="@+id/forgot_password_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send email"
+        android:text="@string/send"
         android:visibility="gone"
         ></Button>
     <Button
         android:id="@+id/revert"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="return to login"
+        android:text="@string/return_login"
         android:visibility="gone"
         ></Button>
 

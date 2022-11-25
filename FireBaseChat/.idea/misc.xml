@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/activity_login_registration.xml" value="0.19153484395040615" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/activity_main.xml" value="0.24660018132366274" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/homescreen.xml" value="0.19153484395040615" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/message_preview.xml" value="0.22" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/messages.xml" value="0.24660018132366274" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/messages_preview.xml" value="0.19153484395040615" />
+        <entry key="..\:/Users/brend/AndroidStudioProjects/FireBaseChat/app/src/main/res/layout/report_message.xml" value="0.19153484395040615" />
+      </map>
+    </option>
+  </component>
+</project>

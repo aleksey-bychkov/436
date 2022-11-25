@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.R
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -61,14 +62,30 @@ class ReportMessage: AppCompatActivity() {
                 .setValue(Report(messageID, message, binding.additionalInfo.editText?.text.toString(), reportedUID, reportingUID, time, false))
                 .addOnCompleteListener(
                     OnCompleteListener {
-                        binding.report.isEnabled = false
-                        Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show()
+                        if(it.isSuccessful){
+                            binding.report.isEnabled = false
+                            Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show()
+                            db.child("Messages").child(messageID).child("isReported").setValue(true)
+                            db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).get().addOnCompleteListener(){
+                                if(it.result.child("msgID").value.toString() == messageID){
+                                    db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).child("isReported").setValue(true)
+                                }
+
+
+
+                            }.addOnFailureListener{
+                                Log.e("firebase", "Error getting data", it)
+                            }
+
+                        } else {
+                            Toast.makeText(this, "Report failed", Toast.LENGTH_SHORT).show()
+                        }
                     })
-            db.child("Messages").child(messageID).child("isReported").setValue(true)
+
 
         }
-        binding.back.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+        //binding.back.setOnClickListener {
+        //    startActivity(Intent(this, MainActivity::class.java))
+        //}
     }
 }

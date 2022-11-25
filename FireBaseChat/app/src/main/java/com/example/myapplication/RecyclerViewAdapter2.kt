@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 
@@ -22,6 +23,8 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
         var messageID: TextView = itemView.findViewById(R.id.messageID2)
         var viewMessage: FloatingActionButton = itemView.findViewById(R.id.viewMessage)
         var targetID: TextView = itemView.findViewById(R.id.targetID)
+        var read: ImageView = itemView.findViewById(R.id.read)
+        var unread: ImageView = itemView.findViewById(R.id.unread)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,13 +33,29 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(list.get(position).getIsReported()){
+            holder.message.text = ""
+        } else {
+            holder.message.text = list.get(position).getMsg()
+        }
+        if(list.get(position).getIsRead()){
+            holder.read.visibility == View.VISIBLE
+            holder.unread.visibility == View.INVISIBLE
+        } else {
+            holder.read.visibility == View.INVISIBLE
+            holder.unread.visibility == View.VISIBLE
+        }
+
         holder.username.text = list.get(position).getUsername()
-        holder.message.text = list.get(position).getMsg()
         holder.dateTime.text = list.get(position).getDateTime()
-        holder.messageID.text = ""
+        holder.messageID.text = list.get(position).getMsgID()
         holder.targetID.text = list.get(position).getTargetUID()
 
         holder.itemView.setOnClickListener(View.OnClickListener {
+            if(!list.get(position).getIsRead()){
+                db.child("Users").child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                    .child("Contacts").child(list.get(position).getTargetUID()).child("isRead").setValue(true)
+            }
             val intent = Intent(context, MainActivity::class.java)
             intent.putExtra("target",list.get(position).getTargetUID())
             startActivity(context, intent, null)})

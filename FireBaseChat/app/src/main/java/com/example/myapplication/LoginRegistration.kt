@@ -160,8 +160,8 @@ class LoginRegistration : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
         if (currentUser != null){
-           //startActivity(Intent(this, MessagesPreview::class.java))
-           //finish()
+           startActivity(Intent(this, MessagesPreview::class.java))
+           finish()
         }
     }
 

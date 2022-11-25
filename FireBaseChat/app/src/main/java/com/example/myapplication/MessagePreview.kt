@@ -4,8 +4,10 @@ class MessagePreview(
     private var username: String = "",
     private var targetUID: String = "",
     private var msg: String = "",
+    private var msgID: String = "",
     private var dateTime: String = "",
     private var isReported: Boolean = false,
+    private var isRead: Boolean = false,
 
 ) {
 
@@ -20,6 +22,10 @@ class MessagePreview(
         this.msg = msg
     }
 
+    fun setMsgID(msgID: String): Unit{
+        this.msgID = msgID
+    }
+
     fun setDateTime(dateTime: String): Unit{
         this.dateTime = dateTime
     }
@@ -32,12 +38,20 @@ class MessagePreview(
         this.isReported = status
     }
 
+    fun setIsRead(status: Boolean): Unit{
+        this.isRead = status
+    }
+
     fun getUsername(): String {
         return this.username
     }
 
     fun getMsg(): String {
         return this.msg
+    }
+
+    fun getMsgID(): String {
+        return this.msgID
     }
 
     fun getDateTime(): String {
@@ -50,6 +64,10 @@ class MessagePreview(
 
     fun getIsReported(): Boolean {
         return this.isReported
+    }
+
+    fun getIsRead(): Boolean {
+        return this.isRead
     }
 
 

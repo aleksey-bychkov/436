@@ -16,14 +16,16 @@
         android:background="@drawable/outside_shape"
         android:padding="10dp"
         >
+
         <TextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Username"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/read"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/messageID2"
             android:layout_width="1dp"
@@ -45,7 +47,7 @@
             android:id="@+id/user_message2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample message"
+            android:text="No message at this time"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@+id/viewMessage"
@@ -58,10 +60,25 @@
             android:id="@+id/user_message_date_time2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11/14/22 00:00AM"
+            android:text=""
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@id/viewMessage"
             app:layout_constraintBottom_toBottomOf="parent" />
+        <ImageView
+            android:id="@+id/read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_baseline_mark_chat_read_24"></ImageView>
+        <ImageView
+            android:id="@+id/unread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_mark_chat_unread_24"></ImageView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/viewMessage"

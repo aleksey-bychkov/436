@@ -14,7 +14,7 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,18 +38,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         db = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
-
         val extras = intent.extras
         if (extras != null) {
             target = extras.getString("target")!!
-            Log.i("test",target)
+            db.child("Users").child(target).get().addOnCompleteListener(){
+                Log.i("test",it.result.child("Username").value.toString())
+                binding.target.text = it.result.child("Username").value.toString()
+
+
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+            }
+
         }
 
         var user = auth.currentUser
         var uID = user?.uid
         var targetUID = target
-        val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
+
         binding.fabSend.setOnClickListener(View.OnClickListener {
+            val time = SimpleDateFormat("dd/MM/yyyy h:mm:ss z").format(Calendar.getInstance().time)
             if (filterMessage(binding.message.editText?.text.toString())){
                 Toast.makeText(this, "Your message contains a word that violates our terms of service", Toast.LENGTH_SHORT).show()
             } else {
@@ -63,10 +71,17 @@ class MainActivity : AppCompatActivity() {
                                 length = 50
                             }
                             db.child("Users").child(uID).child("Contacts").child(targetUID)
-                                .setValue(MessagePreview(targetUID, targetUID, binding.message.editText?.text.toString().substring(0,length), time, false))
-                            db.child("Users").child(targetUID).child("Contacts").child(uID)
-                                .setValue(MessagePreview(uID, uID, binding.message.editText?.text.toString().substring(0,length-1), time, false))
-                            binding.message.editText?.setText("") })
+                                .setValue(MessagePreview(binding.target.text.toString(), targetUID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, true))
+                            db.child("Users").child(uID).get().addOnCompleteListener(){
+                                db.child("Users").child(targetUID).child("Contacts").child(uID)
+                                    .setValue(MessagePreview(it.result.child("Username").value.toString(), uID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, false))
+                                binding.message.editText?.setText("")
+
+                            }.addOnFailureListener{
+                                Log.e("firebase", "Error getting data", it)
+                            }
+
+                            })
 
             }
 

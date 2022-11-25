@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Polmegle</string>
     <string name="email_hint">Enter Email</string>
+    <string name="email_label">Enter a valid email address</string>
     <string name="password_hint">Enter Password</string>
+    <string name="password_label">Enter a valid password, minimum of 6 characters</string>
+    <string name="username_hint">Enter username</string>
+    <string name="username_label">Enter a valid username</string>
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
     <string name="enter_message_hint">Enter message ...</string>
@@ -12,5 +16,9 @@
     <string name="additional_info_hint">Enter info...</string>
     <string name="back">Back</string>
     <string name="report">Report</string>
-
+    <string name="submit">Submit</string>
+    <string name="next">Next</string>
+    <string name="forgot">Forgot password</string>
+    <string name="send">Send reset email</string>
+    <string name="return_login">return to log in</string>
 </resources>

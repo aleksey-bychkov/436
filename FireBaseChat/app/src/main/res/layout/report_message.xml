@@ -12,8 +12,7 @@
         android:textSize="30sp"
         android:background="@color/purple_200"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/back"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:gravity="center"
         android:layout_width="match_parent">
 
@@ -26,10 +25,9 @@
         android:textSize="30sp"
         android:background="@color/purple_200"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
-         android:layout_width="wrap_content">
+        android:layout_width="match_parent">
 
     </TextView>
 
@@ -102,12 +100,12 @@
         app:layout_constraintEnd_toEndOf="parent"
        ></Button>
 
-    <Button
+    <!--<Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="@id/messageHeader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
+        app:layout_constraintTop_toTopOf="parent"></Button>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

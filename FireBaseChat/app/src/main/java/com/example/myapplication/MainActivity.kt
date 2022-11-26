@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,6 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,7 +57,12 @@ class MainActivity : AppCompatActivity() {
         var targetUID = target
 
         binding.fabSend.setOnClickListener(View.OnClickListener {
-            val time = SimpleDateFormat("dd/MM/yyyy h:mm:ss z").format(Calendar.getInstance().time)
+            //val time = SimpleDateFormat("dd/MM/yyyy h:mm:ss z").format(Calendar.getInstance().time)
+
+            val sdf = SimpleDateFormat("dd/MM/yyyy h:mm:ss z")
+            sdf.timeZone = TimeZone.getTimeZone("UTC")
+            val time = sdf.format(Date())
+
             if (filterMessage(binding.message.editText?.text.toString())){
                 Toast.makeText(this, "Your message contains a word that violates our terms of service", Toast.LENGTH_SHORT).show()
             } else {

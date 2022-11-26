@@ -47,7 +47,7 @@
             android:id="@+id/user_message2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No message at this time"
+            android:text="@string/start_convo"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@+id/viewMessage"
@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/viewMessage"
             android:src="@drawable/ic_baseline_mark_chat_read_24"></ImageView>
         <ImageView
             android:id="@+id/unread"
@@ -77,6 +78,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/viewMessage"
             android:visibility="invisible"
             android:src="@drawable/ic_baseline_mark_chat_unread_24"></ImageView>
 

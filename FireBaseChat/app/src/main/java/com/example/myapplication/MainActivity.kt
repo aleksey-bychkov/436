@@ -66,27 +66,39 @@ class MainActivity : AppCompatActivity() {
             if (filterMessage(binding.message.editText?.text.toString())){
                 Toast.makeText(this, "Your message contains a word that violates our terms of service", Toast.LENGTH_SHORT).show()
             } else {
-                var newEntry = db.child("Messages").push().key
-                db.child("Messages").child(newEntry!!)
-                    .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, newEntry!!))
-                    .addOnCompleteListener(
-                        OnCompleteListener {
-                            var length = binding.message.editText?.text.toString().length
-                            if(length > 50){
-                                length = 50
-                            }
-                            db.child("Users").child(uID).child("Contacts").child(targetUID)
-                                .setValue(MessagePreview(binding.target.text.toString(), targetUID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, true))
-                            db.child("Users").child(uID).get().addOnCompleteListener(){
-                                db.child("Users").child(targetUID).child("Contacts").child(uID)
-                                    .setValue(MessagePreview(it.result.child("Username").value.toString(), uID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, false))
-                                binding.message.editText?.setText("")
+                db.child("Users").child(target).child("Contacts").child(uID!!).get().addOnCompleteListener(){
+                    if(it.result.child("isBlocked").value == false){
+                        var newEntry = db.child("Messages").push().key
+                        db.child("Messages").child(newEntry!!)
+                            .setValue(Message(uID!!, targetUID, binding.message.editText?.text.toString(), time, false, newEntry!!))
+                            .addOnCompleteListener(
+                                OnCompleteListener {
+                                    var length = binding.message.editText?.text.toString().length
+                                    if(length > 50){
+                                        length = 50
+                                    }
+                                    db.child("Users").child(uID).child("Contacts").child(targetUID)
+                                        .setValue(Contacts(binding.target.text.toString(), targetUID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, true, false))
+                                    db.child("Users").child(uID).child("Contacts").child(targetUID).get().addOnCompleteListener(){ it2 ->
+                                        db.child("Users").child(targetUID).child("Contacts").child(uID)
+                                            .setValue(Contacts(it2.result.child("Username").value.toString(), uID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, false,
+                                                it2.result.child("isBlocked").value as Boolean
+                                            ))
+                                        binding.message.editText?.setText("")
 
-                            }.addOnFailureListener{
-                                Log.e("firebase", "Error getting data", it)
-                            }
+                                    }.addOnFailureListener{
+                                        Log.e("firebase", "Error getting data", it)
+                                    }
 
-                            })
+                                })
+                    } else {
+                        binding.message.editText?.setText("")
+                    }
+
+
+                }.addOnFailureListener{
+                    Log.e("firebase", "Error getting data", it)
+                }
 
             }
 

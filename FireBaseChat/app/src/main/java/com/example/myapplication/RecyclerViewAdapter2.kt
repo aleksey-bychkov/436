@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
-class RecyclerViewAdapter2 (private var context: Context, private var list: ArrayList<MessagePreview>) : RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>() {
+class RecyclerViewAdapter2 (private var context: Context, private var list: ArrayList<Contacts>) : RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //var username: TextView = itemView.findViewById(R.id.username)
         var username: TextView = itemView.findViewById(R.id.username)

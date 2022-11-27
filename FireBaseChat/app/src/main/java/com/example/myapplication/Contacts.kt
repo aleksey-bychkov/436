@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-class MessagePreview(
+class Contacts(
     private var username: String = "",
     private var targetUID: String = "",
     private var msg: String = "",
@@ -8,7 +8,7 @@ class MessagePreview(
     private var dateTime: String = "",
     private var isReported: Boolean = false,
     private var isRead: Boolean = false,
-
+    private var isBlocked: Boolean = false
 ) {
 
 
@@ -42,6 +42,10 @@ class MessagePreview(
         this.isRead = status
     }
 
+    fun setIsBlocked(status: Boolean): Unit{
+        this.isBlocked = status
+    }
+
     fun getUsername(): String {
         return this.username
     }
@@ -68,6 +72,10 @@ class MessagePreview(
 
     fun getIsRead(): Boolean {
         return this.isRead
+    }
+
+    fun getIsBlocked(): Boolean {
+        return this.isBlocked
     }
 
 

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MessagesPreview: AppCompatActivity() {
-    var list = ArrayList<MessagePreview>()
+    var list = ArrayList<Contacts>()
     lateinit var binding: MessagesPreviewBinding
     lateinit var db : DatabaseReference
     private lateinit var auth : FirebaseAuth
@@ -49,11 +49,13 @@ class MessagesPreview: AppCompatActivity() {
                 list.clear()
                 for (snap in snapshot.children){
 
-                    val msg = snap.getValue(MessagePreview::class.java)
+                    val msg = snap.getValue(Contacts::class.java)
 
                     if (msg != null) {
-                        list.add(msg)
-                        adapter.notifyDataSetChanged()
+                        if(!msg.getIsBlocked()){
+                            list.add(msg)
+                            adapter.notifyDataSetChanged()
+                        }
                     }
                 }
             }

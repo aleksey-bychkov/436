@@ -14,4 +14,14 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project><?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/zfigh/Documents/436/FireBaseChat/app/src/main/res/layout/fragment_home.xml" value="0.12183383991894631" />
+        <entry key="..\:/Users/zfigh/Documents/436/FireBaseChat/app/src/main/res/layout/homescreen.xml" value="0.11423505572441743" />
+      </map>
+    </option>
+  </component>
 </project>

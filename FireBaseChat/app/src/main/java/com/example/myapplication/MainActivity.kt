@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
                                     }.addOnFailureListener{
                                         Log.e("firebase", "Error getting data", it)
+                                        Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
                                     }
 
                                 })
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
                 }.addOnFailureListener{
                     Log.e("firebase", "Error getting data", it)
+                    Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -154,6 +156,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }.addOnFailureListener{
                 Log.e("firebase", "Error getting data", it)
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
             }
 
         }

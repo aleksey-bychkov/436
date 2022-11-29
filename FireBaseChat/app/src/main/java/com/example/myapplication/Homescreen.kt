@@ -21,8 +21,8 @@ internal class Homescreen : AppCompatActivity() {
             when(it.itemId) {
                 R.id.home->setCurrentFragment(HomeFragment())
                 R.id.settings->setCurrentFragment(SettingsFragment())
-                R.id.profile->setCurrentFragment(ProfileFragment())
                 R.id.messages->startActivity(Intent(this, MessagesPreview::class.java))
+                // TODO: create fragment switch to survey
             }
 
             return@setOnItemSelectedListener true

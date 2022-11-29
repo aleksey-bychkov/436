@@ -22,4 +22,10 @@
     <string name="send">Send reset email</string>
     <string name="return_login">return to log in</string>
     <string name="start_convo">Start a conversation</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="clickable_string"><b>Sure! Take me there!</b></string>
+    <string name="new_connections">New Connections:</string>
+    <string name="welcome_messages">Hello, %1$s! You have %2$d new messages.</string>
+
+
 </resources>

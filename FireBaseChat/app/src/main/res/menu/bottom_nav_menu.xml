@@ -7,9 +7,9 @@
     <item android:title="Messages"
         android:icon="@drawable/ic_baseline_mail_24"
         android:id="@+id/messages"/>
-    <item android:title="Profile"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:id="@+id/profile"/>
+    <item android:title="Survey"
+        android:icon="@drawable/ic_baseline_storage_24"
+        android:id="@+id/survey"/>
     <item android:title="Settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:id="@+id/settings"/>

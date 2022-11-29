@@ -35,7 +35,7 @@ class LoginRegistration : AppCompatActivity() {
             mAuth.signInWithEmailAndPassword(emailText, passwordText).addOnCompleteListener(
                 OnCompleteListener {
                     if(it.isSuccessful){
-                        startActivity(Intent(this, MessagesPreview::class.java))
+                        startActivity(Intent(this, Homescreen::class.java))
                         finish()
                     } else {
                         Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
@@ -106,7 +106,7 @@ class LoginRegistration : AppCompatActivity() {
                         .setValue(binding.enterUsername.editText?.text.toString())
                         .addOnCompleteListener(
                             OnCompleteListener {
-                                startActivity(Intent(this, MessagesPreview::class.java))
+                                startActivity(Intent(this, Homescreen::class.java))
                                 finish()})
                 })
 
@@ -160,7 +160,7 @@ class LoginRegistration : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
         if (currentUser != null){
-           startActivity(Intent(this, MessagesPreview::class.java))
+           startActivity(Intent(this, Homescreen::class.java))
            finish()
         }
     }

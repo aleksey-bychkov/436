@@ -162,6 +162,7 @@ class LoginRegistration : AppCompatActivity() {
         if (currentUser != null){
            startActivity(Intent(this, Homescreen::class.java))
            finish()
+
         }
     }
 

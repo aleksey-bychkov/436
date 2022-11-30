@@ -1,14 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/helloUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        ></TextView>
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/blank1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/helloUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        ></TextView>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/email_hint"
+        app:layout_constraintTop_toBottomOf="@id/helloUser"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/password_hint"
+        app:layout_constraintTop_toBottomOf="@id/email"
+        android:visibility="gone">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Enter New Email"
+        app:layout_constraintTop_toBottomOf="@id/enter_new_email"
+        android:visibility="gone">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/enter_new_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter New Email"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        android:visibility="gone"
+        ></TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Enter New Password"
+        app:layout_constraintTop_toBottomOf="@id/enter_new_password"
+        android:visibility="gone">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/enter_new_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter New Password"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        android:visibility="gone"
+        ></TextView>
+    <Button
+        android:id="@+id/submitEmailChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@id/newEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"></Button>
+    <Button
+        android:id="@+id/returnFromEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="return"
+        app:layout_constraintTop_toBottomOf="@id/submitEmailChange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+    </Button>
+    <Button
+        android:id="@+id/changeEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Email"
+        app:layout_constraintTop_toBottomOf="@id/blank1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </Button>
+    <Button
+        android:id="@+id/submitPasswordChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@id/newPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"></Button>
+    <Button
+        android:id="@+id/returnFromPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="return"
+        app:layout_constraintTop_toBottomOf="@id/submitPasswordChange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+    </Button>
+    <TextView
+        android:id="@+id/blank2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/changeEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        ></TextView>
+    <Button
+        android:id="@+id/changePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        app:layout_constraintTop_toBottomOf="@id/blank2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </Button>
+    <TextView
+        android:id="@+id/blank3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/changePassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        ></TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Enter New Username"
+        app:layout_constraintTop_toBottomOf="@id/enter_new_user"
+        android:visibility="gone">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/enter_new_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter New Username"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        android:visibility="gone"
+        ></TextView>
+    <Button
+        android:id="@+id/submitUserChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@id/newUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"></Button>
+    <Button
+        android:id="@+id/returnFromUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="return"
+        app:layout_constraintTop_toBottomOf="@id/submitUserChange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+    </Button>
+    <Button
+        android:id="@+id/changeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Username"
+        app:layout_constraintTop_toBottomOf="@id/blank3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </Button>
+    <TextView
+        android:id="@+id/blank4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/changeUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        ></TextView>
+    <Button
+        android:id="@+id/viewBlocklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Block/Unblock"
+        app:layout_constraintTop_toBottomOf="@id/blank4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

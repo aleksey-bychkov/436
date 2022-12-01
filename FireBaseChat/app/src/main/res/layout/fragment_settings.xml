@@ -276,5 +276,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
     </Button>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/blocklist_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

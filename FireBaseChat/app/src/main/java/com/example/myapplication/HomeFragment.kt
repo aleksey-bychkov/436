@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private var unread = 0
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var listener: ValueEventListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +40,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
-        db.child("Users").child(mAuth.currentUser!!.uid).child("Contacts").addValueEventListener(object :
+        listener = db.child("Users").child(mAuth.currentUser!!.uid).child("Contacts").addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 unread = 0
@@ -73,5 +74,14 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onPause() {
+        super.onPause()
+        db.child("Users").child(mAuth.currentUser!!.uid).child("Contacts").removeEventListener(listener)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        db.child("Users").child(mAuth.currentUser!!.uid).child("Contacts").removeEventListener(listener)
+    }
 
 }

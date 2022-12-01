@@ -8,10 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,8 +33,10 @@ class SettingsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var list = ArrayList<Contacts>()
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var mAuth: FirebaseAuth
+    lateinit var adapter: RecyclerViewBlocklist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +46,28 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    fun receiveContacts(){
+        db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").addValueEventListener(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot){
+                list.clear()
+                for (snap in snapshot.children){
+
+                    val contact = snap.getValue(Contacts::class.java)
+
+                    if (contact != null) {
+                        list.add(contact)
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+
+            }
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,12 +75,22 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
+        adapter = context?.let { RecyclerViewBlocklist(it, list) }!!
+        val llm: LinearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.blocklistRecycler.layoutManager = llm
+        binding.blocklistRecycler.adapter = adapter
 
         db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
             Log.i("test",it.result.child("Username").value.toString())
             binding.helloUser.text = "Hello, "+it.result.child("Username").value.toString()+"!"
+            receiveContacts()
 
         }
+
+        binding.viewBlocklist.setOnClickListener(View.OnClickListener {
+            hideAllUI()
+            binding.blocklistRecycler.visibility = View.VISIBLE
+        })
 
         binding.changeEmail.setOnClickListener(View.OnClickListener {
             hideAllUI()
@@ -177,6 +217,7 @@ class SettingsFragment : Fragment() {
         }
 
         fun hideAllUI(){
+            binding.blocklistRecycler.visibility = View.GONE
             binding.email.editText?.setText("")
             binding.password.editText?.setText("")
             binding.newEmail.editText?.setText("")
@@ -231,6 +272,8 @@ class SettingsFragment : Fragment() {
                 }
                 return false
             }
+
+
 
     }
 

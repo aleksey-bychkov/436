@@ -9,7 +9,7 @@
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
     <string name="enter_message_hint">Enter message ...</string>
-    <string name="report_header">Report a Message</string>
+    <string name="report_header">REPORT A MESSAGE</string>
     <string name="report_message_display_header">The message being reported is:</string>
     <string name="reason_header">Select a reason for the report:</string>
     <string name="additional_info_header">Enter any additional info:</string>
@@ -39,5 +39,6 @@
     <string name="enter_new_email">Enter New Email</string>
     <string name="confirm_new_email">Confirm New Email</string>
     <string name="hello_settings">Hello, </string>
+    <string name="settings">SETTINGS</string>
 
 </resources>

@@ -27,6 +27,17 @@
     <string name="new_connections">New Connections:</string>
     <string name="welcome_messages">Hello, %1$s! You have %2$d new messages.</string>
     <string name="reported_message"><i>Reported message</i></string>
-
+    <string name="block_unblock">Block/Unblock</string>
+    <string name="change_username">Change Username</string>
+    <string name="return_home">return</string>
+    <string name="enter_new_username">Enter New Username</string>
+    <string name="confirm_new_username">Confirm New Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_email">Change Email</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="enter_new_email">Enter New Email</string>
+    <string name="confirm_new_email">Confirm New Email</string>
+    <string name="hello_settings">Hello, </string>
 
 </resources>

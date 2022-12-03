@@ -1,23 +1,21 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +35,7 @@ class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var mAuth: FirebaseAuth
     lateinit var adapter: RecyclerViewBlocklist
+    lateinit var listener: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class SettingsFragment : Fragment() {
     }
 
     fun receiveContacts(){
-        db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").addValueEventListener(object :
+        listener = db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
                 list.clear()
@@ -82,7 +81,7 @@ class SettingsFragment : Fragment() {
 
         db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
             Log.i("test",it.result.child("Username").value.toString())
-            binding.helloUser.text = "Hello, "+it.result.child("Username").value.toString()+"!"
+            binding.helloUser.text = getString(R.string.hello_settings)+" "+it.result.child("Username").value.toString()+"!"
             receiveContacts()
 
         }
@@ -90,6 +89,8 @@ class SettingsFragment : Fragment() {
         binding.viewBlocklist.setOnClickListener(View.OnClickListener {
             hideAllUI()
             binding.blocklistRecycler.visibility = View.VISIBLE
+            binding.returnBlock.visibility = View.VISIBLE
+            binding.layout.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
         })
 
         binding.changeEmail.setOnClickListener(View.OnClickListener {
@@ -98,8 +99,13 @@ class SettingsFragment : Fragment() {
             binding.password.visibility = View.VISIBLE
             binding.newEmail.visibility = View.VISIBLE
             binding.enterNewEmail.visibility = View.VISIBLE
+            binding.confirmEmail.visibility = View.VISIBLE
             binding.submitEmailChange.visibility = View.VISIBLE
-            binding.returnFromEmail.visibility = View.VISIBLE
+            binding.returnHome.visibility = View.VISIBLE
+            binding.blankButtons.visibility = View.VISIBLE
+            binding.signIn.visibility = View.VISIBLE
+            binding.buttons.visibility = View.VISIBLE
+            binding.blankSignin.visibility = View.VISIBLE
         })
 
         binding.changePassword.setOnClickListener(View.OnClickListener {
@@ -108,9 +114,13 @@ class SettingsFragment : Fragment() {
             binding.password.visibility = View.VISIBLE
             binding.newPassword.visibility = View.VISIBLE
             binding.enterNewPassword.visibility = View.VISIBLE
+            binding.confirmPassword.visibility = View.VISIBLE
             binding.submitPasswordChange.visibility = View.VISIBLE
-            binding.returnFromPassword.visibility = View.VISIBLE
-
+            binding.returnHome.visibility = View.VISIBLE
+            binding.blankButtons.visibility = View.VISIBLE
+            binding.signIn.visibility = View.VISIBLE
+            binding.buttons.visibility = View.VISIBLE
+            binding.blankSignin.visibility = View.VISIBLE
         })
 
         binding.changeUser.setOnClickListener(View.OnClickListener {
@@ -119,28 +129,37 @@ class SettingsFragment : Fragment() {
             binding.password.visibility = View.VISIBLE
             binding.newUser.visibility = View.VISIBLE
             binding.enterNewUser.visibility = View.VISIBLE
+            binding.confirmUser.visibility = View.VISIBLE
             binding.submitUserChange.visibility = View.VISIBLE
-            binding.returnFromUser.visibility = View.VISIBLE
-
+            binding.returnHome.visibility = View.VISIBLE
+            binding.blankButtons.visibility = View.VISIBLE
+            binding.signIn.visibility = View.VISIBLE
+            binding.buttons.visibility = View.VISIBLE
+            binding.blankSignin.visibility = View.VISIBLE
         })
 
         binding.submitEmailChange.setOnClickListener(View.OnClickListener {
             mAuth.signInWithEmailAndPassword(binding.email.editText!!.text.toString(),binding.password.editText!!.text.toString()).addOnCompleteListener(){ task ->
                     if (task.isSuccessful) {
                         // Sign in success now update email
-                        mAuth.currentUser!!.updateEmail(binding.newEmail.editText!!.text.toString())
-                            .addOnCompleteListener{ task ->
-                                if (task.isSuccessful) {
-                                    // email update completed
-                                    Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
-                                    binding.email.editText?.setText("")
-                                    binding.password.editText?.setText("")
-                                    binding.newEmail.editText?.setText("")
-                                }else{
-                                    // email update failed
-                                    Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                        if(binding.newEmail.editText!!.text.toString() == binding.confirmEmail.editText!!.text.toString()){
+                            mAuth.currentUser!!.updateEmail(binding.newEmail.editText!!.text.toString())
+                                .addOnCompleteListener{ task ->
+                                    if (task.isSuccessful) {
+                                        // email update completed
+                                        Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
+                                        binding.email.editText?.setText("")
+                                        binding.password.editText?.setText("")
+                                        binding.newEmail.editText?.setText("")
+                                    }else{
+                                        // email update failed
+                                        Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
+                        } else {
+                            Toast.makeText(context, "The emails you entered do not match!",Toast.LENGTH_SHORT).show()
+                        }
+
                     } else {
                         // sign in failed
                         Toast.makeText(context,"Invalid login information.",Toast.LENGTH_SHORT).show()
@@ -151,20 +170,25 @@ class SettingsFragment : Fragment() {
         binding.submitPasswordChange.setOnClickListener(View.OnClickListener {
             mAuth.signInWithEmailAndPassword(binding.email.editText!!.text.toString(),binding.password.editText!!.text.toString()).addOnCompleteListener(){ task ->
                 if (task.isSuccessful) {
-                    // Sign in success now update email
-                    mAuth.currentUser!!.updatePassword(binding.newPassword.editText!!.text.toString())
-                        .addOnCompleteListener{ task ->
-                            if (task.isSuccessful) {
-                                // email update completed
-                                Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
-                                binding.email.editText?.setText("")
-                                binding.password.editText?.setText("")
-                                binding.newPassword.editText?.setText("")
-                            }else{
-                                // email update failed
-                                Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                    // Sign in success now update password
+                    if(binding.newPassword.editText!!.text.toString() == binding.confirmPassword.editText!!.text.toString()){
+                        mAuth.currentUser!!.updatePassword(binding.newPassword.editText!!.text.toString())
+                            .addOnCompleteListener{ task ->
+                                if (task.isSuccessful) {
+                                    // email update completed
+                                    Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
+                                    binding.email.editText?.setText("")
+                                    binding.password.editText?.setText("")
+                                    binding.newPassword.editText?.setText("")
+                                }else{
+                                    // email update failed
+                                    Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
+                    } else {
+                        Toast.makeText(context,"The passwords you entered don't match.",Toast.LENGTH_SHORT).show()
+                    }
+
                 } else {
                     // sign in failed
                     Toast.makeText(context,"Invalid login information.",Toast.LENGTH_SHORT).show()
@@ -181,16 +205,21 @@ class SettingsFragment : Fragment() {
                     } else if(filterMessage(binding.newUser.editText?.text.toString())){
                         Toast.makeText(context, "Invalid username", Toast.LENGTH_SHORT).show()
                     } else {
-                        db.child("Users").child(mAuth.currentUser!!.uid).child("Username")
-                            .setValue(binding.newUser.editText?.text.toString())
-                            .addOnCompleteListener(
-                                OnCompleteListener {
-                                   binding.helloUser.text = "Hello, "+binding.newUser.editText?.text.toString()+"!"
-                                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-                                    binding.email.editText?.setText("")
-                                    binding.password.editText?.setText("")
-                                    binding.newUser.editText?.setText("")
-                                })
+                        if(binding.newUser.editText!!.text.toString() == binding.confirmUser.editText!!.text.toString()){
+                            db.child("Users").child(mAuth.currentUser!!.uid).child("Username")
+                                .setValue(binding.newUser.editText?.text.toString())
+                                .addOnCompleteListener(
+                                    OnCompleteListener {
+                                        binding.helloUser.text = "Hello, "+binding.newUser.editText?.text.toString()+"!"
+                                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                                        binding.email.editText?.setText("")
+                                        binding.password.editText?.setText("")
+                                        binding.newUser.editText?.setText("")
+                                    })
+                        } else {
+                            Toast.makeText(context,"The usernames you entered don't match.",Toast.LENGTH_SHORT).show()
+                        }
+
 
                     }
                 } else {
@@ -200,53 +229,58 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        binding.returnFromEmail.setOnClickListener(View.OnClickListener {
+        binding.returnHome.setOnClickListener(View.OnClickListener {
             resetUI()
+        })
+        binding.returnBlock.setOnClickListener(View.OnClickListener {
+            resetUI()
+            binding.layout.gravity = Gravity.CENTER
         })
 
-        binding.returnFromPassword.setOnClickListener(View.OnClickListener {
-            resetUI()
-        })
-
-        binding.returnFromUser.setOnClickListener(View.OnClickListener {
-            resetUI()
-        })
 
 
             return binding.root
         }
 
         fun hideAllUI(){
+            binding.blankButtons.visibility = View.GONE
             binding.blocklistRecycler.visibility = View.GONE
             binding.email.editText?.setText("")
             binding.password.editText?.setText("")
             binding.newEmail.editText?.setText("")
             binding.newUser.editText?.setText("")
             binding.newPassword.editText?.setText("")
-            binding.email.visibility = View.INVISIBLE
-            binding.password.visibility = View.INVISIBLE
-            binding.newEmail.visibility = View.INVISIBLE
-            binding.newPassword.visibility = View.INVISIBLE
-            binding.enterNewEmail.visibility = View.INVISIBLE
-            binding.submitEmailChange.visibility = View.INVISIBLE
-            binding.enterNewPassword.visibility = View.INVISIBLE
-            binding.returnFromEmail.visibility = View.INVISIBLE
-            binding.returnFromPassword.visibility = View.INVISIBLE
-            binding.submitPasswordChange.visibility = View.INVISIBLE
-            binding.newUser.visibility = View.INVISIBLE
-            binding.enterNewUser.visibility = View.INVISIBLE
-            binding.returnFromUser.visibility = View.INVISIBLE
-            binding.submitUserChange.visibility = View.INVISIBLE
-            binding.changeEmail.visibility = View.INVISIBLE
-            binding.helloUser.visibility = View.INVISIBLE
-            binding.blank1.visibility = View.INVISIBLE
-            binding.blank2.visibility = View.INVISIBLE
-            binding.blank3.visibility = View.INVISIBLE
-            binding.blank4.visibility = View.INVISIBLE
-            binding.changePassword.visibility = View.INVISIBLE
-            binding.changeUser.visibility = View.INVISIBLE
-            binding.viewBlocklist.visibility = View.INVISIBLE
-
+            binding.confirmEmail.editText?.setText("")
+            binding.confirmPassword.editText?.setText("")
+            binding.confirmUser.editText?.setText("")
+            binding.email.visibility = View.GONE
+            binding.password.visibility = View.GONE
+            binding.newEmail.visibility = View.GONE
+            binding.newPassword.visibility = View.GONE
+            binding.confirmEmail.visibility = View.GONE
+            binding.confirmPassword.visibility = View.GONE
+            binding.enterNewEmail.visibility = View.GONE
+            binding.submitEmailChange.visibility = View.GONE
+            binding.enterNewPassword.visibility = View.GONE
+            binding.returnHome.visibility = View.GONE
+            binding.submitPasswordChange.visibility = View.GONE
+            binding.newUser.visibility = View.GONE
+            binding.enterNewUser.visibility = View.GONE
+            binding.confirmUser.visibility = View.GONE
+            binding.submitUserChange.visibility = View.GONE
+            binding.changeEmail.visibility = View.GONE
+            binding.helloUser.visibility = View.GONE
+            binding.blank1.visibility = View.GONE
+            binding.blank2.visibility = View.GONE
+            binding.blank3.visibility = View.GONE
+            binding.blank4.visibility = View.GONE
+            binding.changePassword.visibility = View.GONE
+            binding.changeUser.visibility = View.GONE
+            binding.viewBlocklist.visibility = View.GONE
+            binding.buttons.visibility = View.GONE
+            binding.signIn.visibility = View.GONE
+            binding.blankSignin.visibility = View.GONE
+            binding.returnBlock.visibility = View.GONE
         }
 
 
@@ -262,6 +296,7 @@ class SettingsFragment : Fragment() {
             binding.changeUser.visibility = View.VISIBLE
             binding.viewBlocklist.visibility = View.VISIBLE
 
+
         }
             fun filterMessage(msg: String): Boolean {
                 val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch", "nigga", "prostitute", "jew", "blackie", "bastard").toSet()
@@ -273,7 +308,10 @@ class SettingsFragment : Fragment() {
                 return false
             }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").removeEventListener(listener)
+    }
 
     }
 

@@ -109,14 +109,14 @@ class HomeFragment : Fragment() {
                     binding.messageprev.visibility = View.GONE
                     binding.nomessages.visibility = View.VISIBLE
                 }
-                db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
-                    Log.i("test",it.result.child("Username").value.toString())
-                    val name = it.result.child("Username").value.toString()
-                    val text: String = getString(R.string.welcome_messages, name, unread)
-                    view?.findViewById<TextView>(R.id.welcome)?.setText(text)
-                }.addOnFailureListener{
-                    Log.e("firebase", "Error getting data", it)
-                }
+                //db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
+                //    Log.i("test",it.result.child("Username").value.toString())
+                //    val name = it.result.child("Username").value.toString()
+                //    val text: String = getString(R.string.welcome_messages, name, unread)
+                //    view?.findViewById<TextView>(R.id.welcome)?.setText(text)
+                //}.addOnFailureListener{
+                //    Log.e("firebase", "Error getting data", it)
+                //}
             }
 
 

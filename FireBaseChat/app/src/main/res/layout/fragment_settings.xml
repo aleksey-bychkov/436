@@ -12,7 +12,7 @@
         android:id="@+id/messageHeader"
         android:layout_height="wrap_content"
         android:text="@string/settings"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:background="@color/purple_200"
         app:layout_constraintTop_toTopOf="parent"

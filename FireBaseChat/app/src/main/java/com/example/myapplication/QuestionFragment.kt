@@ -76,8 +76,8 @@ class QuestionFragment(topicID: String) : Fragment() {
             saveSurvey()
         else {
             // make call to DB
-            binding.questionheader.text = topicID + "Question " + questionNumber.toString() + " of 5"
-            binding.questionText.text = " question" + questionNumber
+            binding.questionheader.text = "Question " + questionNumber + " of 5"
+            binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 
         }
     }

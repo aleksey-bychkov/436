@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.FragmentQuestionBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,14 +22,15 @@ class QuestionFragment(topicID: String) : Fragment() {
 
     }
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // Inflate the layout for this fragment
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
 
-        binding.questionheader.text = topicID + "Question " + questionNumber + " of 5"
-        binding.questionText.text = " question" + questionNumber
+        binding.questionheader.text = "Question " + questionNumber + " of 5"
+        binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 
         binding.option1.setOnClickListener{
             nextQuestion("1")
@@ -46,6 +48,12 @@ class QuestionFragment(topicID: String) : Fragment() {
             nextQuestion("5")
         }
         return binding.root
+    }
+
+    private fun getString(aString: String): String? {
+        val packageName= getActivity()?.getPackageName()
+        val resId = resources.getIdentifier(aString, "string", packageName)
+        return getString(resId)
     }
 
     private fun saveSurvey()

@@ -26,6 +26,12 @@
     <string name="topic4question3">Topic 1</string>
     <string name="topic4question4">Topic 1</string>
     <string name="topic4question5">Topic 1</string>
+    <string name="topic5">Physician-Assisted Suicide</string>
+    <string name="topic5question1">Topic 1</string>
+    <string name="topic5question2">Topic </string>
+    <string name="topic5question3">Topic 1</string>
+    <string name="topic5question4">Topic 1</string>
+    <string name="topic5question5">Topic 1</string>
     <string name="option1">Strongly Agree</string>
     <string name="option2">Somewhat Agree</string>
     <string name="option3">Neutral</string>

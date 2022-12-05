@@ -90,14 +90,13 @@ class MainActivity : AppCompatActivity() {
                                     // update current user contacts
                                     db.child("Users").child(uID).child("Contacts").child(targetUID)
                                         .setValue(Contacts(binding.target.text.toString(), targetUID, binding.message.editText?.text.toString().substring(0,length), newEntry, time, false, true, false))
-                                    db.child("Users").child(target).child("Contacts").child(uID).get().addOnCompleteListener(){ it2 ->
                                         // get current user's username and update contacts of target user
-                                        db.child("Users").child(uID).get().addOnCompleteListener { it3 ->
+                                        db.child("Users").child(uID).get().addOnCompleteListener { it2 ->
                                             db.child("Users").child(targetUID).child("Contacts")
                                                 .child(uID)
                                                 .setValue(
                                                     Contacts(
-                                                        it3.result.child("Username").value.toString(),
+                                                        it2.result.child("Username").value.toString(),
                                                         uID,
                                                         binding.message.editText?.text.toString()
                                                             .substring(0, length),
@@ -105,18 +104,12 @@ class MainActivity : AppCompatActivity() {
                                                         time,
                                                         false,
                                                         false,
-                                                        it2.result.child("isBlocked").value as Boolean
+                                                        false
                                                     )
                                                 )
                                             // clear text from send message text input
                                             binding.message.editText?.setText("")
                                         }
-
-
-                                    }.addOnFailureListener{
-                                        // if this failed specify why in the error log
-                                        Log.e("firebase", "Error getting data", it)
-                                    }
 
                                 })
                     } else {

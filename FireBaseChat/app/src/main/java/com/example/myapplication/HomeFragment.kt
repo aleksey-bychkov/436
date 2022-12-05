@@ -31,9 +31,6 @@ import com.google.firebase.database.ValueEventListener
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     var list = ArrayList<Contacts>()
     private lateinit var mAuth: FirebaseAuth
     private var unread = 0

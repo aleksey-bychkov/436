@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/messageHeader"
+            android:id="@+id/questionheader"
             android:layout_height="wrap_content"
             android:text="@string/home"
             android:textColor="@color/white"

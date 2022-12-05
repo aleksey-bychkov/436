@@ -11,9 +11,6 @@ class Contacts(
     private var isBlocked: Boolean = false
 ) {
 
-
-
-
     fun setUsername(username: String): Unit{
         this.username = username
     }

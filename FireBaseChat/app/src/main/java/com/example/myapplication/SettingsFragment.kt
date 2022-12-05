@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -237,6 +238,11 @@ class SettingsFragment : Fragment() {
             binding.layout.gravity = Gravity.CENTER
         })
 
+        binding.signOut.setOnClickListener(View.OnClickListener {
+            mAuth.signOut()
+            startActivity(Intent(context, LoginRegistration::class.java))
+        })
+
 
 
             return binding.root
@@ -274,6 +280,7 @@ class SettingsFragment : Fragment() {
             binding.blank2.visibility = View.GONE
             binding.blank3.visibility = View.GONE
             binding.blank4.visibility = View.GONE
+            binding.blank5.visibility = View.GONE
             binding.changePassword.visibility = View.GONE
             binding.changeUser.visibility = View.GONE
             binding.viewBlocklist.visibility = View.GONE
@@ -281,6 +288,7 @@ class SettingsFragment : Fragment() {
             binding.signIn.visibility = View.GONE
             binding.blankSignin.visibility = View.GONE
             binding.returnBlock.visibility = View.GONE
+            binding.signOut.visibility = View.GONE
         }
 
 
@@ -292,9 +300,11 @@ class SettingsFragment : Fragment() {
             binding.blank2.visibility = View.VISIBLE
             binding.blank3.visibility = View.VISIBLE
             binding.blank4.visibility = View.VISIBLE
+            binding.blank5.visibility = View.VISIBLE
             binding.changePassword.visibility = View.VISIBLE
             binding.changeUser.visibility = View.VISIBLE
             binding.viewBlocklist.visibility = View.VISIBLE
+            binding.signOut.visibility = View.VISIBLE
 
 
         }

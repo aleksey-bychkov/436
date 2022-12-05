@@ -35,7 +35,7 @@ class QuestionFragment(topicID: String) : Fragment() {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
 
-        binding.questionheader.text = "Question " + questionNumber + " of 5"
+        binding.questionheader.text = getString("question" + questionNumber)
         binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 
         binding.option1.setOnClickListener{
@@ -65,13 +65,12 @@ class QuestionFragment(topicID: String) : Fragment() {
     private fun saveSurvey()
     {
         // save to DB
-        val agg = (responselist.get(0) + responselist.get(1) + responselist.get(2) + responselist.get(3) + responselist.get(4))/5
+        val agg : Float = (responselist.get(0) + responselist.get(1) + responselist.get(2) + responselist.get(3) + responselist.get(4))/5.0F
         db.child("Views").child(mAuth.currentUser!!.uid).child(topicID).setValue(ViewResponse(mAuth.currentUser!!.uid, responselist.get(0), responselist.get(1), responselist.get(2), responselist.get(3), responselist.get(4), agg.toFloat())).addOnCompleteListener(
             OnCompleteListener {
-            Toast.makeText(context, "Answers logged", Toast.LENGTH_SHORT).show()
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
                 if (transaction != null) {
-                    transaction.replace(this.id, SurveyResultsFragment())
+                    transaction.replace(this.id, SurveyResultsFragment(topicID,agg))
                     transaction.disallowAddToBackStack()
                     transaction.commit()
                 }
@@ -86,8 +85,7 @@ class QuestionFragment(topicID: String) : Fragment() {
         if (questionNumber > 5)
             saveSurvey()
         else {
-            // make call to DB
-            binding.questionheader.text = "Question " + questionNumber + " of 5"
+            binding.questionheader.text = getString("question" + questionNumber)
             binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 
         }

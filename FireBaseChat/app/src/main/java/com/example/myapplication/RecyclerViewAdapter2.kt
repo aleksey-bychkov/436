@@ -33,11 +33,19 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(list.get(position).getIsReported()){
-            holder.message.text = ""
+        if(list.get(position).getMsgID() == "temp"){
+            holder.message.text = "Start a conversation!"
+
         } else {
-            holder.message.text = list.get(position).getMsg()
+            if(list.get(position).getIsReported()){
+                holder.message.text = ""
+            } else {
+                holder.message.text = list.get(position).getMsg()
+            }
+            holder.dateTime.text = list.get(position).getDateTime()
+            holder.messageID.text = list.get(position).getMsgID()
         }
+
         if(list.get(position).getIsRead()){
             holder.read.visibility == View.VISIBLE
             holder.unread.visibility == View.INVISIBLE
@@ -47,8 +55,6 @@ class RecyclerViewAdapter2 (private var context: Context, private var list: Arra
         }
 
         holder.username.text = list.get(position).getUsername()
-        holder.dateTime.text = list.get(position).getDateTime()
-        holder.messageID.text = list.get(position).getMsgID()
         holder.targetID.text = list.get(position).getTargetUID()
 
         holder.itemView.setOnClickListener(View.OnClickListener {

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Polmegle</string>
     <string name="topic_results">People we think you should talk too!</string>
-    <string name="topic_poll">Pick a topic</string>
+    <string name="topic_poll">PICK A TOPIC</string>
     <string name="topic1">Abortion</string>
     <string name="topic1question1">Abortion should be prohibited in most or all cases.</string>
     <string name="topic1question2">Abortion of a fetus with Down syndrome is wrong.</string>
@@ -79,5 +79,11 @@
     <string name="settings">SETTINGS</string>
     <string name="home">HOME</string>
     <string name="messages">MESSAGES</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="question1">Question 1 of 5</string>
+    <string name="question2">Question 2 of 5</string>
+    <string name="question3">Question 3 of 5</string>
+    <string name="question4">Question 4 of 5</string>
+    <string name="question5">Question 5 of 5</string>
 
 </resources>

@@ -21,7 +21,7 @@ internal class Homescreen : AppCompatActivity() {
             when(it.itemId) {
                 R.id.home->setCurrentFragment(HomeFragment())
                 R.id.settings->setCurrentFragment(SettingsFragment())
-                R.id.messages->startActivity(Intent(this, MessagesPreview::class.java))
+                R.id.messages->setCurrentFragment(MessagesPreview())
                 R.id.survey->setCurrentFragment(SurveyFragment())
             }
 
@@ -37,4 +37,6 @@ internal class Homescreen : AppCompatActivity() {
         }
 
     }
+
+
 }

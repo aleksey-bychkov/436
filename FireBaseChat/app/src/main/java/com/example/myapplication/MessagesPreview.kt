@@ -2,9 +2,12 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -14,7 +17,7 @@ import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MessagesPreview: AppCompatActivity() {
+class MessagesPreview: Fragment() {
     // declaring important variables
     var list = ArrayList<Contacts>()
     lateinit var binding: MessagesPreviewBinding
@@ -23,24 +26,25 @@ class MessagesPreview: AppCompatActivity() {
     lateinit var adapter: RecyclerViewAdapter2
     lateinit var listener: ValueEventListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?
+    ): View? {
         // intializing variables
         binding = MessagesPreviewBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         db = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         var user = auth.currentUser
         var uID = user?.uid
         // initializing RecyclerView for message previews
-        adapter = RecyclerViewAdapter2(this, list)
-        val llm: LinearLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        adapter = RecyclerViewAdapter2(requireContext(), list)
+        val llm: LinearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.recyclerview2.layoutManager = llm
         binding.recyclerview2.adapter = adapter
+        return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         // register listener for new message previews
         receiveMessages()
     }

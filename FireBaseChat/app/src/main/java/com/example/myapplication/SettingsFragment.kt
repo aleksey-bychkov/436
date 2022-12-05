@@ -53,6 +53,8 @@ class SettingsFragment : Fragment() {
         })
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,10 +67,10 @@ class SettingsFragment : Fragment() {
         val llm: LinearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.blocklistRecycler.layoutManager = llm
         binding.blocklistRecycler.adapter = adapter
+
         // get current username and display it then call recieveContacts
         db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
             binding.helloUser.text = getString(R.string.hello_settings)+" "+it.result.child("Username").value.toString()+"!"
-
 
         }
         // add listener to viewBlocklist button
@@ -76,7 +78,7 @@ class SettingsFragment : Fragment() {
             // hide all UI
             hideAllUI()
             // display relevant UI including recycler view
-            receiveContacts()
+
             binding.blocklistRecycler.visibility = View.VISIBLE
             binding.returnBlock.visibility = View.VISIBLE
             binding.layout.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
@@ -256,6 +258,10 @@ class SettingsFragment : Fragment() {
         })
             return binding.root
         }
+    override fun onResume() {
+        super.onResume()
+        receiveContacts()
+    }
 
         // function to hide and remove text input from all views in layout
         fun hideAllUI(){

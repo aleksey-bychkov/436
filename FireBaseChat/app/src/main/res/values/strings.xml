@@ -42,7 +42,10 @@
     <string name="password_hint">Enter Password</string>
     <string name="password_label">Enter a valid password, minimum of 6 characters</string>
     <string name="username_hint">Enter username</string>
-    <string name="username_label">Enter a valid username</string>
+    <string name="username_label">Enter a valid username, maximum of 12 characters</string>
+    <string name="invalid_username">Invalid Username</string>
+    <string name="email_sent">Email Sent</string>
+    <string name="email_failed">Email not found</string>
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
     <string name="enter_message_hint">Enter message ...</string>
@@ -85,5 +88,17 @@
     <string name="question3">Question 3 of 5</string>
     <string name="question4">Question 4 of 5</string>
     <string name="question5">Question 5 of 5</string>
-
+    <string name="incorrect_login">Incorrect email or password</string>
+    <string name="created_success">Account created successfully</string>
+    <string name="registration_failed">Registration Failed</string>
+    <string name="banned_word">"Your message contains a word that violates our terms of service"</string>
+    <string name="user_blocked">User Blocked</string>
+    <string name="user_unblocked">User Unblocked</string>
+    <string name="user_blocked_failed">Failed to block user</string>
+    <string name="user_unblocked_failed">Failed to unblock user</string>
+    <string name="success">Success!</string>
+    <string name="failed">Failed!</string>
+    <string name="emails_dont_match">The emails you entered do not match</string>
+    <string name="passwords_dont_match">The passwords you entered do not match</string>
+    <string name="usernames_dont_match">The usernames you entered do not match</string>
 </resources>

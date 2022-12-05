@@ -9,6 +9,9 @@ class ViewResponse(
     private var answer5: Int = 0,
     private var agg: Float = 0F) {
 
+    // class used to represent an instance of a survey response in the database
+    // contains information about the answers, aggregate score, and submitter ID
+
     fun setUid(uid: String): Unit{
         this.uid = uid
     }

@@ -8,7 +8,9 @@ class Message(
     private var isReported: Boolean = false,
     private var messageID: String = ""
 ) {
-
+    // class used to represent an instance of a message in the database
+    // contains information about the sender ID and target ID, information about message content,
+    // and whether the receiver reported the message
 
     fun setMessageID(messageID: String): Unit{
         this.messageID = messageID

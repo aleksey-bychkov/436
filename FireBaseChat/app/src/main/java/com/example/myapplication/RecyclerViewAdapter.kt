@@ -17,7 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 class RecyclerViewAdapter
     (private var context: Context, private var list: ArrayList<Message>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //var username: TextView = itemView.findViewById(R.id.username)
+
+        // getting bindings for receiving message layout
         var left: ConstraintLayout = itemView.findViewById(R.id.left)
         var cardL: CardView = itemView.findViewById(R.id.cardLeft)
         var messageL: TextView = itemView.findViewById(R.id.user_message_left)
@@ -25,6 +26,7 @@ class RecyclerViewAdapter
         var messageIDL:TextView = itemView.findViewById(R.id.messageID_left)
         var reportButtonL: FloatingActionButton = itemView.findViewById(R.id.reportButton_left)
 
+        // getting bindings for sending message layout
         var right: ConstraintLayout = itemView.findViewById(R.id.right)
         var cardR: CardView = itemView.findViewById(R.id.cardRight)
         var messageR: TextView = itemView.findViewById(R.id.user_message_right)
@@ -39,9 +41,11 @@ class RecyclerViewAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //holder.username.text = list.get(position).getUserEmail()
+
 
         if(FirebaseAuth.getInstance().uid == list.get(position).getUserID()){
+            // If the message was sent by the current user
+            // hide left layout and set color of text to sending color
             holder.right.visibility = View.VISIBLE
             holder.messageR.text = list.get(position).getMsg()
             holder.dateTimeR.text = list.get(position).getDateTime()
@@ -51,6 +55,8 @@ class RecyclerViewAdapter
             holder.left.visibility = View.GONE
 
         } else {
+            // If the message was not sent by the current user
+            // hide right layout and set color of text to sending color
             holder.left.visibility = View.VISIBLE
             holder.messageL.text = list.get(position).getMsg()
             holder.dateTimeL.text = list.get(position).getDateTime()

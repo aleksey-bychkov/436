@@ -15,20 +15,24 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MessagesPreview: AppCompatActivity() {
+    // declaring important variables
     var list = ArrayList<Contacts>()
     lateinit var binding: MessagesPreviewBinding
     lateinit var db : DatabaseReference
     private lateinit var auth : FirebaseAuth
     lateinit var adapter: RecyclerViewAdapter2
+    lateinit var listener: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // intializing variables
         binding = MessagesPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         var user = auth.currentUser
         var uID = user?.uid
+        // initializing RecyclerView for message previews
         adapter = RecyclerViewAdapter2(this, list)
         val llm: LinearLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.recyclerview2.layoutManager = llm
@@ -37,23 +41,33 @@ class MessagesPreview: AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        // register listener for new message previews
         receiveMessages()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // unregister listener
+        db.child("Users").child(auth.currentUser?.uid!!).child("Contacts").removeEventListener(listener)
     }
 
 
 
     fun receiveMessages(){
-        Log.i("debug",auth.currentUser?.uid!!)
-        db.child("Users").child(auth.currentUser?.uid!!).child("Contacts").addValueEventListener(object : ValueEventListener {
+        // add a listener to the current user's contacts
+        listener = db.child("Users").child(auth.currentUser?.uid!!).child("Contacts").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
+                // when the current user's contacts is changed
                 list.clear()
                 for (snap in snapshot.children){
-
-                    val msg = snap.getValue(Contacts::class.java)
-
-                    if (msg != null) {
-                        if(!msg.getIsBlocked()){
-                            list.add(msg)
+                    // get the contact as an instance of Contacts class
+                    val con = snap.getValue(Contacts::class.java)
+                    // if contacts is valid
+                    if (con != null) {
+                        // if the user has not blocked the contact
+                        if(!con.getIsBlocked()){
+                            // add contact to adapter
+                            list.add(con)
                             adapter.notifyDataSetChanged()
                         }
                     }

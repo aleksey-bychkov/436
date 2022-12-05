@@ -15,10 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class RecyclerViewBlocklist (private var context: Context, private var list: ArrayList<Contacts>) : RecyclerView.Adapter<RecyclerViewBlocklist.ViewHolder>() {
-
-
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // get relevant layout pieces
         var username: TextView = itemView.findViewById(R.id.username)
         var blocked: ImageView = itemView.findViewById(R.id.block)
         var unblocked: ImageView = itemView.findViewById(R.id.unblock)
@@ -32,40 +30,50 @@ class RecyclerViewBlocklist (private var context: Context, private var list: Arr
     }
 
     override fun onBindViewHolder(holder: RecyclerViewBlocklist.ViewHolder, position: Int) {
+        // get current database and user
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseDatabase.getInstance().reference
-        Log.i("debug",user!!.uid)
+        // set the username of the user
         holder.username.text = list.get(position).getUsername()
+        // add listener to blocked icon to block a user
         holder.blocked.setOnClickListener(View.OnClickListener {
+            // change user to blocked in contacts
             db.child("Users").child(user!!.uid).child("Contacts").child(list.get(position).getTargetUID()).child("isBlocked").setValue(true)
                 .addOnCompleteListener(
                     OnCompleteListener {
                         if(it.isSuccessful){
-                            Toast.makeText(context,"User blocked",Toast.LENGTH_SHORT).show()
+                            // if successful say it succeeded and change the user to be displayed as blocked
+                            Toast.makeText(context,holder.itemView.resources.getString(R.string.user_blocked),Toast.LENGTH_SHORT).show()
                             holder.blocked.visibility = View.GONE
                             holder.unblocked.visibility = View.VISIBLE
                         } else {
-                            Toast.makeText(context,"Failed to block user",Toast.LENGTH_SHORT).show()
+                            // if failed notify user
+                            Toast.makeText(context,holder.itemView.resources.getString(R.string.user_blocked_failed),Toast.LENGTH_SHORT).show()
                         }
 
                     })
         })
 
+        // add listener to blocked icon to block a user
         holder.unblocked.setOnClickListener(View.OnClickListener {
+            // change user to unblocked in contacts
             db.child("Users").child(user!!.uid).child("Contacts").child(list.get(position).getTargetUID()).child("isBlocked").setValue(false)
                 .addOnCompleteListener(
                     OnCompleteListener {
                         if(it.isSuccessful){
-                            Toast.makeText(context,"User unblocked",Toast.LENGTH_SHORT).show()
+                            // if successful say it succeeded and change the user to be displayed as unblocked
+                            Toast.makeText(context,holder.itemView.resources.getString(R.string.user_unblocked),Toast.LENGTH_SHORT).show()
                             holder.unblocked.visibility = View.GONE
                             holder.blocked.visibility = View.VISIBLE
                         } else {
-                            Toast.makeText(context,"Failed to unblock user",Toast.LENGTH_SHORT).show()
+                            // if failed notify user
+                            Toast.makeText(context,holder.itemView.resources.getString(R.string.user_unblocked_failed),Toast.LENGTH_SHORT).show()
                         }
 
                     })
         })
 
+        // check if the user is blocked or not and update UI accordingly
         if(!list.get(position).getIsBlocked()){
             holder.blocked.visibility = View.VISIBLE
             holder.unblocked.visibility = View.GONE

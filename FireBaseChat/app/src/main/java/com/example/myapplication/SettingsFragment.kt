@@ -18,44 +18,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    // declare variables
     var list = ArrayList<Contacts>()
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var mAuth: FirebaseAuth
     lateinit var adapter: RecyclerViewBlocklist
     lateinit var listener: ValueEventListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    // function to recieve changes to current user's contacts
     fun receiveContacts(){
+        // register listener
         listener = db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
+                // when data is changed
+                // remove currently displayed contacts
                 list.clear()
                 for (snap in snapshot.children){
-
+                    // for each contact, save the current contact as instance of Contacts class
                     val contact = snap.getValue(Contacts::class.java)
-
+                    // if contact is valid
                     if (contact != null) {
+                        // display contact
                         list.add(contact)
                         adapter.notifyDataSetChanged()
                     }
@@ -72,30 +57,35 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Initialize variables
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
+        // intialize recylcer view
         adapter = context?.let { RecyclerViewBlocklist(it, list) }!!
         val llm: LinearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.blocklistRecycler.layoutManager = llm
         binding.blocklistRecycler.adapter = adapter
-
+        // get current username and display it then call recieveContacts
         db.child("Users").child(mAuth.currentUser!!.uid).get().addOnCompleteListener(){
-            Log.i("test",it.result.child("Username").value.toString())
             binding.helloUser.text = getString(R.string.hello_settings)+" "+it.result.child("Username").value.toString()+"!"
-            receiveContacts()
+
 
         }
-
+        // add listener to viewBlocklist button
         binding.viewBlocklist.setOnClickListener(View.OnClickListener {
+            // hide all UI
             hideAllUI()
+            // display relevant UI including recycler view
+            receiveContacts()
             binding.blocklistRecycler.visibility = View.VISIBLE
             binding.returnBlock.visibility = View.VISIBLE
             binding.layout.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
         })
-
+        // add listener to changeEmail button
         binding.changeEmail.setOnClickListener(View.OnClickListener {
+            // hide all UI
             hideAllUI()
+            // display relevant UI including new email text field
             binding.email.visibility = View.VISIBLE
             binding.password.visibility = View.VISIBLE
             binding.newEmail.visibility = View.VISIBLE
@@ -108,9 +98,11 @@ class SettingsFragment : Fragment() {
             binding.buttons.visibility = View.VISIBLE
             binding.blankSignin.visibility = View.VISIBLE
         })
-
+        // add listener to changePassword button
         binding.changePassword.setOnClickListener(View.OnClickListener {
+            // hide all UI
             hideAllUI()
+            // display relevant UI including new password text field
             binding.email.visibility = View.VISIBLE
             binding.password.visibility = View.VISIBLE
             binding.newPassword.visibility = View.VISIBLE
@@ -123,9 +115,11 @@ class SettingsFragment : Fragment() {
             binding.buttons.visibility = View.VISIBLE
             binding.blankSignin.visibility = View.VISIBLE
         })
-
+        // add listener to changeUser button
         binding.changeUser.setOnClickListener(View.OnClickListener {
+            // hide all UI
             hideAllUI()
+            // display relevant UI including new username text field
             binding.email.visibility = View.VISIBLE
             binding.password.visibility = View.VISIBLE
             binding.newUser.visibility = View.VISIBLE
@@ -138,116 +132,132 @@ class SettingsFragment : Fragment() {
             binding.buttons.visibility = View.VISIBLE
             binding.blankSignin.visibility = View.VISIBLE
         })
-
+        // add listener to submitEmailChange button
         binding.submitEmailChange.setOnClickListener(View.OnClickListener {
+            // sign in the user before making important account changes
             mAuth.signInWithEmailAndPassword(binding.email.editText!!.text.toString(),binding.password.editText!!.text.toString()).addOnCompleteListener(){ task ->
                     if (task.isSuccessful) {
                         // Sign in success now update email
                         if(binding.newEmail.editText!!.text.toString() == binding.confirmEmail.editText!!.text.toString()){
+                            // if emails match each other
                             mAuth.currentUser!!.updateEmail(binding.newEmail.editText!!.text.toString())
                                 .addOnCompleteListener{ task ->
                                     if (task.isSuccessful) {
                                         // email update completed
-                                        Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context,getString(R.string.success),Toast.LENGTH_SHORT).show()
                                         binding.email.editText?.setText("")
                                         binding.password.editText?.setText("")
                                         binding.newEmail.editText?.setText("")
                                     }else{
                                         // email update failed
-                                        Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context,getString(R.string.failed),Toast.LENGTH_SHORT).show()
                                     }
                                 }
                         } else {
-                            Toast.makeText(context, "The emails you entered do not match!",Toast.LENGTH_SHORT).show()
+                            // emails don't match
+                            Toast.makeText(context, getString(R.string.emails_dont_match),Toast.LENGTH_SHORT).show()
                         }
 
                     } else {
                         // sign in failed
-                        Toast.makeText(context,"Invalid login information.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,getString(R.string.incorrect_login),Toast.LENGTH_SHORT).show()
                     }
                 }
         })
-
+        // add listener to submitPasswordChange button
         binding.submitPasswordChange.setOnClickListener(View.OnClickListener {
+            // sign in the user before making important account changes
             mAuth.signInWithEmailAndPassword(binding.email.editText!!.text.toString(),binding.password.editText!!.text.toString()).addOnCompleteListener(){ task ->
                 if (task.isSuccessful) {
                     // Sign in success now update password
                     if(binding.newPassword.editText!!.text.toString() == binding.confirmPassword.editText!!.text.toString()){
+                        // if passwords match each other
                         mAuth.currentUser!!.updatePassword(binding.newPassword.editText!!.text.toString())
                             .addOnCompleteListener{ task ->
                                 if (task.isSuccessful) {
-                                    // email update completed
-                                    Toast.makeText(context,"Success!",Toast.LENGTH_SHORT).show()
+                                    // password update completed
+                                    Toast.makeText(context,getString(R.string.success),Toast.LENGTH_SHORT).show()
                                     binding.email.editText?.setText("")
                                     binding.password.editText?.setText("")
                                     binding.newPassword.editText?.setText("")
                                 }else{
-                                    // email update failed
-                                    Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show()
+                                    // password update failed
+                                    Toast.makeText(context,getString(R.string.failed),Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {
-                        Toast.makeText(context,"The passwords you entered don't match.",Toast.LENGTH_SHORT).show()
+                        // passwords don't match
+                        Toast.makeText(context,getString(R.string.passwords_dont_match),Toast.LENGTH_SHORT).show()
                     }
 
                 } else {
                     // sign in failed
-                    Toast.makeText(context,"Invalid login information.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,getString(R.string.incorrect_login),Toast.LENGTH_SHORT).show()
                 }
             }
         })
-
+        // add listener to submitUserChange button
         binding.submitUserChange.setOnClickListener(View.OnClickListener {
+            // sign in the user before making important account changes
             mAuth.signInWithEmailAndPassword(binding.email.editText!!.text.toString(),binding.password.editText!!.text.toString()).addOnCompleteListener(){ task ->
                 if (task.isSuccessful) {
-                    // Sign in success now update email
-                    if(binding.newUser.editText?.text.toString() == ""){
-                        Toast.makeText(context, "Enter a valid username", Toast.LENGTH_SHORT).show()
-                    } else if(filterMessage(binding.newUser.editText?.text.toString())){
-                        Toast.makeText(context, "Invalid username", Toast.LENGTH_SHORT).show()
+                    // sign in success now update username
+                    // check username format
+                    if(binding.newUser.editText!!.text.toString() == ""){
+                        // if empty notify user to enter a different username
+                        Toast.makeText(context, getString(R.string.invalid_username), Toast.LENGTH_SHORT).show()
+                    } else if(binding.newUser.editText!!.text.toString().length > 12){
+                        // if longer than 12 characters notify user to enter a different username
+                        Toast.makeText(context, getString(R.string.invalid_username), Toast.LENGTH_SHORT).show()
+                    } else if(filterMessage(binding.newUser.editText!!.text.toString())){
+                        // if it contains a banned word notify user to enter a different username
+                        Toast.makeText(context, getString(R.string.invalid_username), Toast.LENGTH_SHORT).show()
                     } else {
                         if(binding.newUser.editText!!.text.toString() == binding.confirmUser.editText!!.text.toString()){
+                            // if usernames match
+                            // update username in database
                             db.child("Users").child(mAuth.currentUser!!.uid).child("Username")
                                 .setValue(binding.newUser.editText?.text.toString())
                                 .addOnCompleteListener(
                                     OnCompleteListener {
-                                        binding.helloUser.text = "Hello, "+binding.newUser.editText?.text.toString()+"!"
-                                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                                        // on completion update ui to display new username and notify user of success
+                                        binding.helloUser.text = getString(R.string.hello_settings)+" "+binding.newUser.editText!!.text.toString()+"!"
+                                        Toast.makeText(context, getString(R.string.success), Toast.LENGTH_SHORT).show()
                                         binding.email.editText?.setText("")
                                         binding.password.editText?.setText("")
                                         binding.newUser.editText?.setText("")
                                     })
                         } else {
-                            Toast.makeText(context,"The usernames you entered don't match.",Toast.LENGTH_SHORT).show()
+                            // usernames do not match
+                            Toast.makeText(context,getString(R.string.usernames_dont_match),Toast.LENGTH_SHORT).show()
                         }
 
 
                     }
                 } else {
                     // sign in failed
-                    Toast.makeText(context,"Invalid login information.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,getString(R.string.incorrect_login),Toast.LENGTH_SHORT).show()
                 }
             }
         })
-
+        // add listener to return to home of settings fragment
         binding.returnHome.setOnClickListener(View.OnClickListener {
             resetUI()
         })
+        // add listener to return to home of settings fragment from view blocklist
         binding.returnBlock.setOnClickListener(View.OnClickListener {
             resetUI()
             binding.layout.gravity = Gravity.CENTER
         })
-
+        // add listener to signout button
         binding.signOut.setOnClickListener(View.OnClickListener {
             mAuth.signOut()
             startActivity(Intent(context, LoginRegistration::class.java))
         })
-
-
-
             return binding.root
         }
 
+        // function to hide and remove text input from all views in layout
         fun hideAllUI(){
             binding.blankButtons.visibility = View.GONE
             binding.blocklistRecycler.visibility = View.GONE
@@ -290,8 +300,7 @@ class SettingsFragment : Fragment() {
             binding.returnBlock.visibility = View.GONE
             binding.signOut.visibility = View.GONE
         }
-
-
+        // function to display the starting views for settings screen
         fun resetUI(){
             hideAllUI()
             binding.changeEmail.visibility = View.VISIBLE
@@ -306,20 +315,21 @@ class SettingsFragment : Fragment() {
             binding.viewBlocklist.visibility = View.VISIBLE
             binding.signOut.visibility = View.VISIBLE
 
-
         }
-            fun filterMessage(msg: String): Boolean {
-                val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch", "nigga", "prostitute", "jew", "blackie", "bastard").toSet()
-                for (wrd in bannedWords){
-                    if(msg.contains(wrd, ignoreCase = true)){
-                        return true
-                    }
+        // function to check usernames for banned words
+        fun filterMessage(msg: String): Boolean {
+            val bannedWords: Set<String> = listOf<String>( "fuck", "shit", "bitch", "nigga", "prostitute", "jew", "blackie", "bastard").toSet()
+            for (wrd in bannedWords){
+                if(msg.contains(wrd, ignoreCase = true)){
+                    return true
                 }
-                return false
             }
+            return false
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // unregister listener when view destroyed
         db.child("Users").child(mAuth.currentUser?.uid!!).child("Contacts").removeEventListener(listener)
     }
 

@@ -10,6 +10,9 @@ class Contacts(
     private var isRead: Boolean = false,
     private var isBlocked: Boolean = false
 ) {
+    // class used to represent an instance of a user's contacts in the database
+    // contains information about the contacts username, ID, information about the last message sent
+    // between these users, and whether the user is marked as blocked by owner of contact
 
     fun setUsername(username: String): Unit{
         this.username = username

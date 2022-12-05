@@ -18,10 +18,7 @@ import java.util.*
 
 class ReportMessage: AppCompatActivity() {
 
-    // Figure out a way to get target ID
-    var target = "targetUID"
-
-
+    // declare variables
     lateinit var message: String
     lateinit var messageID: String
     lateinit var reportedUID: String
@@ -35,57 +32,57 @@ class ReportMessage: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // intialize variables
         binding = ReportMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
-
+        // get relevant information from intent
         val extras = intent.extras
         if (extras != null) {
             message = extras.getString("message")!!
             messageID = extras.getString("messageID")!!
             reportedUID = extras.getString("reportedUID")!!
             reportingUID = extras.getString("reportingUID")!!
-            //The key argument here must match that used in the other activity
         }
+        // allow the user to report a message, only one report per message
         binding.report.isEnabled = true
+        // display the message to be reported
         binding.reportedMessage.text = message
+        // put the categories for report in the spinner
         val items: List<String> = listOf("Dangerous or Illegal", "Discriminatory", "Misinformation", "Disrespectful", "Other")
         val adapter: ArrayAdapter<String> =
             ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item, items)
         binding.reason.adapter = adapter
+        // set report button listener
         binding.report.setOnClickListener {
+            // get report key
             val newEntry = db.child("Reports").push()
             val key = newEntry.key
+            // get current time
             val time = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(Calendar.getInstance().time)
+            // add report to database
             db.child("Reports").push()
                 .setValue(Report(messageID, message, binding.additionalInfo.editText?.text.toString(), reportedUID, reportingUID, time, false))
                 .addOnCompleteListener(
                     OnCompleteListener {
                         if(it.isSuccessful){
+                            // if report successfully submitted, disable report button
                             binding.report.isEnabled = false
+                            // notify user report was submitted
                             Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show()
+                            // update messages and contacts to reflect changes
                             db.child("Messages").child(messageID).child("isReported").setValue(true)
-                            db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).get().addOnCompleteListener(){
-                                if(it.result.child("msgID").value.toString() == messageID){
-                                    db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).child("isReported").setValue(true)
-                                }
-
-
-
-                            }.addOnFailureListener{
-                                Log.e("firebase", "Error getting data", it)
-                            }
+                            db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).child("msgID").child("isReported").setValue(true)
 
                         } else {
+                            // notify user that the report failed to be submitted
                             Toast.makeText(this, "Report failed", Toast.LENGTH_SHORT).show()
                         }
                     })
 
 
         }
-        //binding.back.setOnClickListener {
-        //    startActivity(Intent(this, MainActivity::class.java))
-        //}
+
     }
 }

@@ -9,7 +9,9 @@ class Report(
     private var dateTime: String = "",
     private var resolved: Boolean = false
 ) {
-
+    // class used to represent an instance of a report in the database
+    // contains information about the message, submitter ID, reason for report,
+    // reported user ID, and whether the report has been resolved
 
     fun setMessageID(messageID: String): Unit{
         this.messageID = messageID

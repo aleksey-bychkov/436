@@ -64,10 +64,13 @@ class QuestionFragment(topicID: String) : Fragment() {
 
     private fun saveSurvey()
     {
-        // save to DB
+
+        // calculate aggregate score by taking the average of responses
         val agg : Float = (responselist.get(0) + responselist.get(1) + responselist.get(2) + responselist.get(3) + responselist.get(4))/5.0F
+        /// save user responses to database
         db.child("Views").child(mAuth.currentUser!!.uid).child(topicID).setValue(ViewResponse(mAuth.currentUser!!.uid, responselist.get(0), responselist.get(1), responselist.get(2), responselist.get(3), responselist.get(4), agg.toFloat())).addOnCompleteListener(
             OnCompleteListener {
+                // if this is successful launch results fragment
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
                 if (transaction != null) {
                     transaction.replace(this.id, SurveyResultsFragment(topicID,agg))

@@ -177,10 +177,6 @@ class SurveyResultsFragment(topicID: String, aggScore: Float) : Fragment() {
 
             }
         })
-        // remove listener
-        //
-
-
         return binding.root
     }
 

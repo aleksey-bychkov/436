@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class SettingsFragment : Fragment() {
     // declare variables
@@ -25,6 +23,7 @@ class SettingsFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     lateinit var adapter: RecyclerViewBlocklist
     lateinit var listener: ValueEventListener
+    lateinit var db: DatabaseReference
 
     // function to recieve changes to current user's contacts
     fun receiveContacts(){
@@ -60,8 +59,11 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Initialize variables
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        db = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
+        receiveContacts()
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
         // intialize recylcer view
         adapter = context?.let { RecyclerViewBlocklist(it, list) }!!
         val llm: LinearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -260,7 +262,7 @@ class SettingsFragment : Fragment() {
         }
     override fun onResume() {
         super.onResume()
-        receiveContacts()
+        //receiveContacts()
     }
 
         // function to hide and remove text input from all views in layout

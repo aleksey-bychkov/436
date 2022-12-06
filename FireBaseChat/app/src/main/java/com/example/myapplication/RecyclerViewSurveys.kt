@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewSurveys (private var context: Context, private var survList: ArrayList<String>) : RecyclerView.Adapter<RecyclerViewSurveys.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        // set to appropriate text view
         var surveyName: TextView = itemView.findViewById(R.id.surveyID)
     }
 
@@ -23,7 +23,7 @@ class RecyclerViewSurveys (private var context: Context, private var survList: A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        // display survey name retrieved by ID
         var topicID = survList.get(position)
         if (topicID == "1") {
             holder.surveyName.text = holder.itemView.resources.getString(R.string.topic1)

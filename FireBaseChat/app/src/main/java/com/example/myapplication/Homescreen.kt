@@ -13,12 +13,16 @@ internal class Homescreen : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // inflate view
         binding = HomescreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // current fragment home fragment
         setCurrentFragment(HomeFragment())
+        // set listener for fragment change
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when(it.itemId) {
+                // case switches for each fragment
                 R.id.home->setCurrentFragment(HomeFragment())
                 R.id.settings->setCurrentFragment(SettingsFragment())
                 R.id.messages->setCurrentFragment(MessagesPreview())
@@ -31,6 +35,7 @@ internal class Homescreen : AppCompatActivity() {
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
+        // fragment transaction to switch fragments
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.currentState, fragment)
             commit()

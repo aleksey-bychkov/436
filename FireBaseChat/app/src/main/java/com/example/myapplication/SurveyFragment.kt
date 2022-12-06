@@ -19,9 +19,11 @@ class SurveyFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
+        // inflate view
         binding = FragmentSurveyBinding.inflate(inflater, container, false)
+        // set auth
         mAuth = FirebaseAuth.getInstance()
-
+        // start question from click
         binding.option1.setOnClickListener{
             startQuestions("1")
         }
@@ -43,6 +45,7 @@ class SurveyFragment : Fragment() {
 
     private fun startQuestions( topicId: String)
     {
+        // switch fragment
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {
             transaction.replace(this.id, QuestionFragment(topicId))

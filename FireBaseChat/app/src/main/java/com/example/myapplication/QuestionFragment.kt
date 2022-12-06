@@ -35,9 +35,11 @@ class QuestionFragment(topicID: String) : Fragment() {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         mAuth = FirebaseAuth.getInstance()
 
+        // set header for question number
         binding.questionheader.text = getString("question" + questionNumber)
         binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 
+        // set appropriate question following answer
         binding.option1.setOnClickListener{
             nextQuestion(1)
         }
@@ -85,9 +87,11 @@ class QuestionFragment(topicID: String) : Fragment() {
         responselist.add(value)
         questionNumber++
 
+        // on survey completion
         if (questionNumber > 5)
             saveSurvey()
         else {
+            // set next question
             binding.questionheader.text = getString("question" + questionNumber)
             binding.questionText.text = getString("topic" + topicID + "question" + questionNumber)
 

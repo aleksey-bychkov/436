@@ -71,10 +71,11 @@ class MainActivity : AppCompatActivity() {
                 // if message contains a banned word notify user and do not send
                 Toast.makeText(this, getString(R.string.banned_word), Toast.LENGTH_SHORT).show()
             } else if(binding.message.editText?.text.toString() != ""){
+                Log.i("test","hello")
                 // if message is not empty, send message and update contacts information for sending and target user
                 db.child("Users").child(target).child("Contacts").child(uID!!).get().addOnCompleteListener(){
                     // check if target user has current user blocked
-                    if(it.result.child("isBlocked").value == false){
+                    if(it.result.child("isBlocked").value == false || it.result.child("isBlocked").value == null){
                         // if not blocked add message to database
                         var newEntry = db.child("Messages").push().key
                         db.child("Messages").child(newEntry!!)

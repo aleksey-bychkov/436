@@ -88,6 +88,7 @@ class LoginRegistration : AppCompatActivity() {
                         binding.enterUsername.visibility = View.VISIBLE
                         binding.enterUsername.visibility = View.VISIBLE
                         binding.login.visibility = View.GONE
+                        binding.revert.visibility = View.GONE
                         // sign the user in so we can set username
                         mAuth.signInWithEmailAndPassword(emailText, passwordText).addOnCompleteListener(
                             OnCompleteListener {

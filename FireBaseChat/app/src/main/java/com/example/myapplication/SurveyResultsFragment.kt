@@ -99,6 +99,78 @@ class SurveyResultsFragment(topicID: String, aggScore: Float) : Fragment() {
                         }
                     }
                 }
+                // check if someone was found
+                if(choice4 != null){
+                    // get username of closest user and set the text of person1 button to it
+                    db.child("Users").child(choice4!!).get().addOnCompleteListener(){
+                        binding.person1.text = it.result.child("Username").value.toString()
+                        binding.person1.visibility = View.VISIBLE
+                    }.addOnFailureListener{
+                        Log.e("firebase", "Error getting data", it)
+                    }
+
+                } else {
+                    // if no closest user hide button
+                    binding.person1.visibility = View.GONE
+                }
+
+                // check if someone was found
+                if(choice3 != null){
+                    // get username of 2nd closest user and set the text of person2 button to it
+                    db.child("Users").child(choice3!!).get().addOnCompleteListener(){
+                        binding.person2.text = it.result.child("Username").value.toString()
+                        binding.person2.visibility = View.VISIBLE
+
+                    }.addOnFailureListener{
+                        Log.e("firebase", "Error getting data", it)
+                    }
+                }  else {
+                    // if no 2nd closest user hide button
+                    binding.person2.visibility = View.GONE
+                }
+
+                // check if someone was found
+                if(choice2 != null){
+                    // get username of 3rd closest user and set the text of person3 button to it
+                    db.child("Users").child(choice2!!).get().addOnCompleteListener(){
+                        binding.person3.text = it.result.child("Username").value.toString()
+                        binding.person3.visibility = View.VISIBLE
+                    }.addOnFailureListener{
+                        Log.e("firebase", "Error getting data", it)
+                    }
+                }  else {
+                    // if no 3rd closest user hide button
+                    binding.person3.visibility = View.GONE
+                }
+
+                // check if someone was found
+                if(choice1 != null){
+                    // get username of 4th closest user and set the text of person4 button to it
+                    db.child("Users").child(choice1!!).get().addOnCompleteListener(){
+                        binding.person4.text = it.result.child("Username").value.toString()
+                        binding.person4.visibility = View.VISIBLE
+                    }.addOnFailureListener{
+                        Log.e("firebase", "Error getting data", it)
+                    }
+                }  else {
+                    // if no 4th closest user hide button
+                    binding.person4.visibility = View.GONE
+                }
+
+                // set onClick listeners for each person button
+                binding.person1.setOnClickListener{
+                    startConversation(choice4, binding.person1.text.toString())
+                }
+                binding.person2.setOnClickListener{
+                    startConversation(choice3, binding.person2.text.toString())
+                }
+                binding.person3.setOnClickListener{
+                    startConversation(choice2, binding.person3.text.toString())
+                }
+                binding.person4.setOnClickListener{
+                    startConversation(choice1, binding.person4.text.toString())
+                }
+                db.child("Views").removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
@@ -106,92 +178,25 @@ class SurveyResultsFragment(topicID: String, aggScore: Float) : Fragment() {
             }
         })
         // remove listener
-        db.child("Views").removeEventListener(listener)
+        //
 
-        // check if someone was found
-        if(choice4 != null){
-            // get username of closest user and set the text of person1 button to it
-            db.child("Users").child(choice4!!).get().addOnCompleteListener(){
-                binding.person1.text = it.result.child("Username").value.toString()
-
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-
-        } else {
-            // if no closest user hide button
-            binding.person1.visibility = View.GONE
-        }
-
-        // check if someone was found
-        if(choice3 != null){
-            // get username of 2nd closest user and set the text of person2 button to it
-            db.child("Users").child(choice3!!).get().addOnCompleteListener(){
-                binding.person2.text = it.result.child("Username").value.toString()
-
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-        }  else {
-            // if no 2nd closest user hide button
-            binding.person2.visibility = View.GONE
-        }
-
-        // check if someone was found
-        if(choice2 != null){
-            // get username of 3rd closest user and set the text of person3 button to it
-            db.child("Users").child(choice2!!).get().addOnCompleteListener(){
-                binding.person3.text = it.result.child("Username").value.toString()
-
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-        }  else {
-            // if no 3rd closest user hide button
-            binding.person3.visibility = View.GONE
-        }
-
-        // check if someone was found
-        if(choice1 != null){
-            // get username of 4th closest user and set the text of person4 button to it
-            db.child("Users").child(choice1!!).get().addOnCompleteListener(){
-                binding.person4.text = it.result.child("Username").value.toString()
-
-            }.addOnFailureListener{
-                Log.e("firebase", "Error getting data", it)
-            }
-        }  else {
-            // if no 4th closest user hide button
-            binding.person4.visibility = View.GONE
-        }
-
-        // set onClick listeners for each person button
-        binding.person1.setOnClickListener{
-            startConversation(choice4)
-        }
-        binding.person2.setOnClickListener{
-            startConversation(choice3)
-        }
-        binding.person3.setOnClickListener{
-            startConversation(choice2)
-        }
-        binding.person4.setOnClickListener{
-            startConversation(choice1)
-        }
 
         return binding.root
     }
 
-    private fun startConversation( choice: String?)
+    private fun startConversation(choice: String?, username: String?)
     {
         // Save the desired person as a one way contact, with an identifier to specify no messages
         // have been sent between these users
-        db.child(mAuth.currentUser!!.uid).child("Contacts").child(choice!!).setValue(Contacts(binding.person1.text.toString(), choice, "", "temp", "", false, true, false)).addOnCompleteListener(
+        db.child("Users").child(mAuth.currentUser!!.uid).child("Contacts").child(choice!!).setValue(Contacts(username.toString(), choice, "", "temp", "", false, true, false)).addOnCompleteListener(
             OnCompleteListener {
                 // when this is complete launch messaging activity
-                val intent = Intent(context, MainActivity::class.java)
-                intent.putExtra("target",choice)
-                context?.let { ContextCompat.startActivity(it, intent, null) }
+                if(it.isSuccessful){
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.putExtra("target",choice)
+                    context?.let { ContextCompat.startActivity(it, intent, null) }
+                }
+
             })
     }
 

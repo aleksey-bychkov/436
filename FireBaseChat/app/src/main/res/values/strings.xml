@@ -5,7 +5,7 @@
     <string name="topic1">Abortion</string>
     <string name="topic1question1">Abortion should be prohibited in most or all cases.</string>
     <string name="topic1question2">Abortion of a fetus with Down syndrome is wrong.</string>
-    <string name="topic1question3">Abortion can be justified.</string>
+    <string name="topic1question3">Abortion can NOT be justified.</string>
     <string name="topic1question4">A fetus is a person.</string>
     <string name="topic1question5">Pregnant people have the right to choose to have an abortion.</string>
     <string name="topic2">Drug Legalization</string>
@@ -13,7 +13,7 @@
     <string name="topic2question2">Psychedelics should be legalized.</string>
     <string name="topic2question3">The war on drugs has not been worth the cost.</string>
     <string name="topic2question4">A person should have the right to do what they want.</string>
-    <string name="topic2question5">Drugs always do more harm than good.</string>
+    <string name="topic2question5">Drugs always do more good than harm.</string>
     <string name="topic3">Capital Punishment</string>
     <string name="topic3question1">The death penalty is morally acceptable.</string>
     <string name="topic3question2">The death penalty is more humane than life without possibility of parole.</string>

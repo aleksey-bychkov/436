@@ -2,11 +2,9 @@ package com.example.myapplication
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 
@@ -16,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class RecyclerViewHome (private var context: Context, private var list: ArrayList<Contacts>) : RecyclerView.Adapter<RecyclerViewHome.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //var username: TextView = itemView.findViewById(R.id.username)
         var username: TextView = itemView.findViewById(R.id.username)
         var message: TextView = itemView.findViewById(R.id.user_message2)
         var messageID: TextView = itemView.findViewById(R.id.messageID2)
@@ -25,17 +22,21 @@ class RecyclerViewHome (private var context: Context, private var list: ArrayLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view = LayoutInflater.from(context).inflate(R.layout.home_preview,parent,false)
+        var view = LayoutInflater.from(context).inflate(R.layout.home_message_preview,parent,false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(list.get(position).getIsReported()){
-            holder.message.text = R.string.reported_message.toString()
+        if(list.get(position).getMsgID() == "temp"){
+            // prompt the user to start a conversation
+            holder.message.text = holder.itemView.context.getString(R.string.start_convo)
         } else {
-            holder.message.text = list.get(position).getMsg()
+            if (list.get(position).getIsReported()) {
+                holder.message.text = R.string.reported_message.toString()
+            } else {
+                holder.message.text = list.get(position).getMsg()
+            }
         }
-
         holder.username.text = list.get(position).getUsername()
         holder.messageID.text = list.get(position).getMsgID()
         holder.targetID.text = list.get(position).getTargetUID()

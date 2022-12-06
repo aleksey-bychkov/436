@@ -30,24 +30,26 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textAlignment="center"/>
+
     <TextView
         android:id="@+id/reportedMessage"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        app:layout_constraintTop_toBottomOf="@+id/messageReportedHeader"
+        android:layout_height="wrap_content"
         android:text=""
-        android:textSize="25sp"
         android:textAlignment="center"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/messageReportedHeader" />
+
     <TextView
         android:id="@+id/reasonHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/reportedMessage"
         android:text="@string/reason_header"
-        android:textSize="20sp"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textAlignment="center"/>
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/reportedMessage" />
 
     <Spinner
         android:id="@+id/reason"

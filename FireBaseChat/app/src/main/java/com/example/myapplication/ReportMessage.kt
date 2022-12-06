@@ -73,7 +73,7 @@ class ReportMessage: AppCompatActivity() {
                             Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show()
                             // update messages and contacts to reflect changes
                             db.child("Messages").child(messageID).child("isReported").setValue(true)
-                            db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).child("msgID").child("isReported").setValue(true)
+                            db.child("Users").child(reportingUID).child("Contacts").child(reportedUID).child("isReported").setValue(true)
 
                         } else {
                             // notify user that the report failed to be submitted
